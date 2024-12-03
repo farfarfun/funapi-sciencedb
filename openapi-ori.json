@@ -1,0 +1,982 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "ScienceDB API",
+        "version": "1.0.0",
+        "title": "ScienceDB API Doc",
+        "termsOfService": "https://www.scidb.cn/en/terms"
+    },
+    "host": "www.scidb.cn/api/sdb-openapi-service",
+    "basePath": "/",
+    "tags": [
+        {
+            "name": "open-api-controller",
+            "description": "Open Api Controller"
+        },
+        {
+            "name": "sushi-controller",
+            "description": "Sushi Controller"
+        }
+    ],
+    "paths": {
+        "/harvest": {
+            "get": {
+                "tags": [
+                    "open-api-controller"
+                ],
+                "summary": "harvest dataset by dataset's publish time period(start_time and end_time)",
+                "description": "result is order by publish time desc",
+                "operationId": "harvestUsingGET",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "end_time",
+                        "in": "query",
+                        "description": "date format : 'yyyy-MM-dd'",
+                        "required": false,
+                        "type": "string",
+                        "default": "2099-01-01",
+                        "allowEmptyValue": false
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page No",
+                        "required": false,
+                        "type": "integer",
+                        "default": 1,
+                        "format": "int32",
+                        "allowEmptyValue": false
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "description": "Page Size",
+                        "required": false,
+                        "type": "integer",
+                        "default": 10,
+                        "format": "int32",
+                        "allowEmptyValue": false
+                    },
+                    {
+                        "name": "start_time",
+                        "in": "query",
+                        "description": "date format : 'yyyy-MM-dd'",
+                        "required": false,
+                        "type": "string",
+                        "default": "1970-01-01",
+                        "allowEmptyValue": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/APIResult«SearchResult»"
+                        }
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/json": {
+            "get": {
+                "tags": [
+                    "open-api-controller"
+                ],
+                "summary": "get dataset's detail information by it's doi",
+                "description": "information's format is referenced by https://schema.org/Dataset",
+                "operationId": "jsonUsingGET",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "doi",
+                        "in": "query",
+                        "description": "dataset's DOI",
+                        "required": true,
+                        "type": "string",
+                        "allowEmptyValue": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/metrics": {
+            "get": {
+                "tags": [
+                    "open-api-controller"
+                ],
+                "summary": "search dataset metrics by doi",
+                "description": "search dataset metrics by doi",
+                "operationId": "metricsUsingGET",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "doi",
+                        "in": "query",
+                        "description": "doi",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/APIResult«MetricsResult»"
+                        }
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/report/{id}": {
+            "get": {
+                "tags": [
+                    "sushi-controller"
+                ],
+                "summary": "This resource returns the COUNTER Dataset Report by id",
+                "operationId": "getReportByIdUsingGET",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "publisher",
+                        "in": "query",
+                        "description": "publisher",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/SUSHIReport"
+                        }
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/reports": {
+            "get": {
+                "tags": [
+                    "sushi-controller"
+                ],
+                "summary": "getReports",
+                "description": "This resource returns a list of reports supported by the API for a given application.",
+                "operationId": "getReports",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "page[number]",
+                        "in": "query",
+                        "description": "page[number]",
+                        "required": false,
+                        "type": "integer",
+                        "default": 1,
+                        "format": "int32",
+                        "allowEmptyValue": false
+                    },
+                    {
+                        "name": "page[size]",
+                        "in": "query",
+                        "description": "page[size]",
+                        "required": false,
+                        "type": "integer",
+                        "default": 10,
+                        "format": "int32",
+                        "allowEmptyValue": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/SUSHIReportPage"
+                        }
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/search": {
+            "get": {
+                "tags": [
+                    "open-api-controller"
+                ],
+                "summary": "search dataset by page",
+                "description": "result is order by publish time desc",
+                "operationId": "searchUsingGET",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page No",
+                        "required": false,
+                        "type": "integer",
+                        "default": 1,
+                        "format": "int32",
+                        "allowEmptyValue": false
+                    },
+                    {
+                        "name": "range",
+                        "in": "query",
+                        "description": "Defines how many days of data have been published, if not set the range means search full time range",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int64",
+                        "allowEmptyValue": false
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "description": "Page Size",
+                        "required": false,
+                        "type": "integer",
+                        "default": 10,
+                        "format": "int32",
+                        "allowEmptyValue": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/APIResult«SearchResult»"
+                        }
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/status": {
+            "get": {
+                "tags": [
+                    "sushi-controller"
+                ],
+                "summary": "getAPIStatus",
+                "description": "This resource returns the current status of the reporting service supported by this API.",
+                "operationId": "getAPIStatus",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "platform",
+                        "in": "query",
+                        "description": "Name of the Platform the report data is being requested for.  This can be omitted if the service provides report data for only one platform.",
+                        "required": false,
+                        "type": "string",
+                        "allowEmptyValue": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Status of the reporting service(s) supported by this API.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/SUSHIServiceStatus"
+                            }
+                        }
+                    }
+                },
+                "deprecated": false
+            }
+        }
+    },
+    "definitions": {
+        "APIResult«MetricsResult»": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "20000 means success, other means error"
+                },
+                "message": {
+                    "type": "string",
+                    "description": "code's description in Chinese"
+                },
+                "getMessageEn": {
+                    "type": "string",
+                    "description": "code's description in English"
+                },
+                "data": {
+                    "description": "the data api return",
+                    "$ref": "#/definitions/MetricsResult"
+                }
+            },
+            "title": "APIResult«MetricsResult»",
+            "description": "the api result model"
+        },
+        "APIResult«SearchResult»": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "20000 means success, other means error"
+                },
+                "message": {
+                    "type": "string",
+                    "description": "code's description in Chinese"
+                },
+                "getMessageEn": {
+                    "type": "string",
+                    "description": "code's description in English"
+                },
+                "data": {
+                    "description": "the data api return",
+                    "$ref": "#/definitions/SearchResult"
+                }
+            },
+            "title": "APIResult«SearchResult»",
+            "description": "the api result model"
+        },
+        "COUNTERDatasetAttributes": {
+            "type": "object",
+            "required": [
+                "Type",
+                "Value"
+            ],
+            "properties": {
+                "Type": {
+                    "type": "string",
+                    "example": "dataset-version",
+                    "description": "Item attribute types are defined by NISO Journal Article Version and other work...",
+                    "enum": [
+                        "dataset-version",
+                        "dataset=-type",
+                        "proprietary"
+                    ]
+                },
+                "Value": {
+                    "type": "string",
+                    "example": "VoR",
+                    "description": "Value of the item attribute"
+                }
+            },
+            "title": "COUNTERDatasetAttributes"
+        },
+        "COUNTERDatasetContributors": {
+            "type": "object",
+            "required": [
+                "Type",
+                "Value"
+            ],
+            "properties": {
+                "Type": {
+                    "type": "string",
+                    "example": "name",
+                    "enum": [
+                        "name",
+                        "orcid",
+                        "isni"
+                    ]
+                },
+                "Value": {
+                    "type": "string",
+                    "example": "John Smith",
+                    "description": "Value of the contributor identifier"
+                }
+            },
+            "title": "COUNTERDatasetContributors"
+        },
+        "COUNTERDatasetDates": {
+            "type": "object",
+            "required": [
+                "type",
+                "value"
+            ],
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "example": "pub-date",
+                    "enum": [
+                        "pub-date",
+                        "first-accessed-online",
+                        "proprietary"
+                    ]
+                },
+                "value": {
+                    "type": "string",
+                    "example": "2002-01-15",
+                    "description": "Value of the dataset date"
+                }
+            },
+            "title": "COUNTERDatasetDates"
+        },
+        "COUNTERDatasetIdentifiers": {
+            "type": "object",
+            "required": [
+                "type",
+                "value"
+            ],
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "example": "doi",
+                    "enum": [
+                        "doi",
+                        "proprietary",
+                        "uri"
+                    ]
+                },
+                "value": {
+                    "type": "string",
+                    "example": "0931-865",
+                    "description": "Value of the dataset identifier"
+                }
+            },
+            "title": "COUNTERDatasetIdentifiers"
+        },
+        "COUNTERDatasetInstance": {
+            "type": "object",
+            "properties": {
+                "access-method": {
+                    "type": "string",
+                    "example": "regular",
+                    "description": "Identifies if the usage activity was 'Regular' usage - a user doing research on a content site, or if the usage activity was 'Machine' - for the purpose of retrieving content for Text and Data Mining (TDM)",
+                    "enum": [
+                        "regular",
+                        "machine"
+                    ]
+                },
+                "count": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "metric-type": {
+                    "type": "string",
+                    "enum": [
+                        "total-dataset-investigations",
+                        "unique-dataset-investigations",
+                        "total-dataset-requests",
+                        "unique-dataset-requests"
+                    ]
+                }
+            },
+            "title": "COUNTERDatasetInstance"
+        },
+        "COUNTERDatasetPerformance": {
+            "type": "object",
+            "required": [
+                "instance",
+                "period"
+            ],
+            "properties": {
+                "instance": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/COUNTERDatasetInstance"
+                    }
+                },
+                "period": {
+                    "$ref": "#/definitions/COUNTERDatasetPeriod"
+                }
+            },
+            "title": "COUNTERDatasetPerformance"
+        },
+        "COUNTERDatasetPeriod": {
+            "type": "object",
+            "properties": {
+                "begin-date": {
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2022-08-01"
+                },
+                "end-date": {
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2022-08-31"
+                }
+            },
+            "title": "COUNTERDatasetPeriod"
+        },
+        "COUNTERDatasetReport": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "id of report."
+                },
+                "report-header": {
+                    "description": "repoart header.",
+                    "$ref": "#/definitions/SUSHIReportHeader"
+                },
+                "report-datasets": {
+                    "type": "array",
+                    "description": "list of datasets .",
+                    "items": {
+                        "$ref": "#/definitions/COUNTERDatasetUsage"
+                    }
+                }
+            },
+            "title": "COUNTERDatasetReport",
+            "description": "Describes the formatting needs for the COUNTER Dataset Report. Response may include the Report_Header (optional), Report_Datasets (usage stats)."
+        },
+        "COUNTERDatasetUsage": {
+            "type": "object",
+            "required": [
+                "data-type",
+                "dataset-title",
+                "performance",
+                "platform",
+                "publisher",
+                "publisher-id"
+            ],
+            "properties": {
+                "data-type": {
+                    "type": "string",
+                    "example": "Dataset",
+                    "description": "Nature of the dataset being reported.",
+                    "enum": [
+                        "Dataset"
+                    ]
+                },
+                "dataset-attributes": {
+                    "type": "array",
+                    "description": "Other attributes related related to the dataset.",
+                    "items": {
+                        "$ref": "#/definitions/COUNTERDatasetAttributes"
+                    }
+                },
+                "dataset-contributors": {
+                    "type": "array",
+                    "description": "The identifier for contributor (i.e. creator) of the dataset.",
+                    "items": {
+                        "$ref": "#/definitions/COUNTERDatasetContributors"
+                    }
+                },
+                "dataset-dates": {
+                    "type": "array",
+                    "description": "Publication or other date(s)related to the dataset.",
+                    "items": {
+                        "$ref": "#/definitions/COUNTERDatasetDates"
+                    }
+                },
+                "dataset-id": {
+                    "type": "array",
+                    "description": "The identifier for the report dataset",
+                    "items": {
+                        "$ref": "#/definitions/COUNTERDatasetIdentifiers"
+                    }
+                },
+                "dataset-title": {
+                    "type": "string",
+                    "example": "Lake Erie Fish Community Data",
+                    "description": "Name of the dataset being reported."
+                },
+                "performance": {
+                    "type": "array",
+                    "description": "The usage data related to the report dataset",
+                    "items": {
+                        "$ref": "#/definitions/COUNTERDatasetPerformance"
+                    }
+                },
+                "platform": {
+                    "type": "string",
+                    "example": "Science Data Bank",
+                    "description": "Name of the platform"
+                },
+                "publisher": {
+                    "type": "string",
+                    "example": "Science Data Bank",
+                    "description": "Name of publisher of the dataset"
+                },
+                "publisher-id": {
+                    "type": "array",
+                    "description": "The identifier for the publisher.",
+                    "items": {
+                        "$ref": "#/definitions/COUNTERPublisherIdentifiers"
+                    }
+                },
+                "yop": {
+                    "type": "string",
+                    "example": 2010,
+                    "description": "Year of publication in the format of 'yyyy'. Use '0001' for unknown and '9999' for articles in press."
+                }
+            },
+            "title": "COUNTERDatasetUsage",
+            "description": "Defines the output for the Report_Datasets being returned in a Dataset Report."
+        },
+        "COUNTERPublisherIdentifiers": {
+            "type": "object",
+            "required": [
+                "Type",
+                "Value"
+            ],
+            "properties": {
+                "Type": {
+                    "type": "string",
+                    "example": "ORCID",
+                    "enum": [
+                        "ISNI",
+                        "ORCID",
+                        "GRID"
+                    ]
+                },
+                "Value": {
+                    "type": "string",
+                    "example": "1234-1234-1234-1234",
+                    "description": "Value of the publisher identifier"
+                }
+            },
+            "title": "COUNTERPublisherIdentifiers"
+        },
+        "MetricsResult": {
+            "type": "object",
+            "properties": {
+                "titleZh": {
+                    "type": "string",
+                    "description": "Chinese title of dataset"
+                },
+                "titleEn": {
+                    "type": "string",
+                    "description": "English title of dataset"
+                },
+                "visit": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "Number of data set accesses"
+                },
+                "download": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "Number of data set downloads"
+                },
+                "refPapers": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "The number of papers cited in the dataset"
+                }
+            },
+            "title": "MetricsResult",
+            "description": "wrapper of records of '/harvest' and '/search' and '/metrics' API"
+        },
+        "SUSHIErrorModel": {
+            "type": "object",
+            "required": [
+                "Code",
+                "Message",
+                "Severity"
+            ],
+            "properties": {
+                "Code": {
+                    "type": "integer",
+                    "format": "int32",
+                    "example": 3040,
+                    "description": "Error number. See table of error."
+                },
+                "Data": {
+                    "type": "string",
+                    "example": "Usage data has not been processed for all requested months.",
+                    "description": "Additional data provided by the server to clarify the error."
+                },
+                "Help_URL": {
+                    "type": "string",
+                    "description": "URL describing error details."
+                },
+                "Message": {
+                    "type": "string",
+                    "example": "Partial Data Returned.",
+                    "description": "Text describing the error."
+                },
+                "Severity": {
+                    "type": "string",
+                    "example": "Warning",
+                    "description": "Severity of the error.",
+                    "enum": [
+                        "Warning",
+                        "Fatal",
+                        "Debug",
+                        "Info"
+                    ]
+                }
+            },
+            "title": "SUSHIErrorModel",
+            "description": "Generalized format for presenting errors and exceptions."
+        },
+        "SUSHIPageMeta": {
+            "type": "object",
+            "properties": {
+                "page": {
+                    "type": "integer",
+                    "format": "int32",
+                    "example": 1,
+                    "description": "page number."
+                },
+                "total": {
+                    "type": "integer",
+                    "format": "int64",
+                    "example": 100,
+                    "description": "count of reports."
+                },
+                "totalPages": {
+                    "type": "integer",
+                    "format": "int32",
+                    "example": 10,
+                    "description": "count of pages."
+                }
+            },
+            "title": "SUSHIPageMeta",
+            "description": "page wrapper of reports"
+        },
+        "SUSHIReport": {
+            "type": "object",
+            "properties": {
+                "report": {
+                    "$ref": "#/definitions/COUNTERDatasetReport"
+                }
+            },
+            "title": "SUSHIReport"
+        },
+        "SUSHIReportHeader": {
+            "type": "object",
+            "required": [
+                "release",
+                "report-id",
+                "report-name"
+            ],
+            "properties": {
+                "created": {
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2022-09-01",
+                    "description": "Time the report was prepared"
+                },
+                "created-by": {
+                    "type": "string",
+                    "example": "Science Data Bank",
+                    "description": "Name of the organization producing the report."
+                },
+                "exceptions": {
+                    "type": "array",
+                    "description": "Series of exceptions encounted when preparing the report.",
+                    "items": {
+                        "$ref": "#/definitions/SUSHIErrorModel"
+                    }
+                },
+                "release": {
+                    "type": "string",
+                    "example": "RD1",
+                    "description": "The release or version of the report."
+                },
+                "report-attributes": {
+                    "type": "array",
+                    "description": "Zero or more additional attributes applied to the report. Attributes inform the level of detail in the report.",
+                    "items": {
+                        "type": "object"
+                    }
+                },
+                "report-filters": {
+                    "type": "array",
+                    "description": "Zero or more report filters used for this report.  Typically  reflect filters provided on the Request.  Filters limit the data to be reported on.",
+                    "items": {
+                        "type": "object"
+                    }
+                },
+                "report-id": {
+                    "type": "string",
+                    "example": "DSR",
+                    "description": "The report ID or code or shortname. Typically this will be the same code provided in the Report parameter of the request."
+                },
+                "report-name": {
+                    "type": "string",
+                    "example": "Dataset Report",
+                    "description": "The long name of the report."
+                }
+            },
+            "title": "SUSHIReportHeader",
+            "description": "Generalized report header that defines the requested report, the requestor, the customer, filters applied, reportAttributes applied and any exceptions."
+        },
+        "SUSHIReportList": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "example": "sciencedb-2022-01",
+                    "description": "report id."
+                },
+                "report-header": {
+                    "description": "report headers",
+                    "$ref": "#/definitions/SUSHIReportHeader"
+                }
+            },
+            "title": "SUSHIReportList",
+            "description": "list wrapper of reports"
+        },
+        "SUSHIReportPage": {
+            "type": "object",
+            "properties": {
+                "reports": {
+                    "type": "array",
+                    "description": "list of reports",
+                    "items": {
+                        "$ref": "#/definitions/SUSHIReportList"
+                    }
+                },
+                "meta": {
+                    "description": "meta of page info.",
+                    "$ref": "#/definitions/SUSHIPageMeta"
+                }
+            },
+            "title": "SUSHIReportPage",
+            "description": "page wrapper of reports"
+        },
+        "SUSHIServiceStatus": {
+            "type": "object",
+            "required": [
+                "ServiceActive"
+            ],
+            "properties": {
+                "Alerts": {
+                    "type": "array",
+                    "description": "Any alerts related to service interuptions and status.",
+                    "items": {
+                        "type": "object"
+                    }
+                },
+                "Description": {
+                    "type": "string",
+                    "example": "COUNTER Research Data Usage Reports for the UK Data Service - ReShare.",
+                    "description": "Description of the service."
+                },
+                "Note": {
+                    "type": "string",
+                    "example": "A given customer can request a maximum of 5 requests per day for a given report",
+                    "description": "A general note about the service."
+                },
+                "RegistryURL": {
+                    "type": "string",
+                    "example": "https://www.projectcounter.org/counter-user/ebsco-database/",
+                    "description": "If available, the URL separate registry with additional information about the service."
+                },
+                "ServiceActive": {
+                    "type": "boolean",
+                    "example": true,
+                    "description": "Indicator if the service is currently able to deliver reports."
+                }
+            },
+            "title": "SUSHIServiceStatus"
+        },
+        "SearchRecord": {
+            "type": "object",
+            "properties": {
+                "clicks": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "language": {
+                    "type": "string"
+                },
+                "referenceNumber": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "title": {
+                    "type": "string",
+                    "description": "dataset's title"
+                },
+                "introduction": {
+                    "type": "string",
+                    "description": "dataset's introduction"
+                },
+                "keyword": {
+                    "type": "string",
+                    "example": "kw_1;kw_2;kw_3",
+                    "description": "dataset's keywords, put together in quotation marks"
+                },
+                "author": {
+                    "type": "string",
+                    "example": "2021-08-11 18:20:51",
+                    "description": "dataset's authors, put together in quotation marks"
+                },
+                "publishDate": {
+                    "type": "string",
+                    "example": "author_1;author_2;author_3",
+                    "description": "publish date in ScienceDB"
+                },
+                "taxonomy": {
+                    "type": "string",
+                    "example": "170-Earth science;00-Others",
+                    "description": "taxonomy in ScienceDB,put together in quotation marks,format is 'code'-'taxonomy'"
+                },
+                "year": {
+                    "type": "string",
+                    "example": 2021,
+                    "description": "publish year in ScienceDB"
+                },
+                "doi": {
+                    "type": "string",
+                    "example": "10.11922/sciencedb.00101",
+                    "description": "dataset's doi"
+                }
+            },
+            "title": "SearchRecord",
+            "description": "dataset's brief record of '/harvest' and '/search' API"
+        },
+        "SearchResult": {
+            "type": "object",
+            "properties": {
+                "pageNo": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "pageSize": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "totalPages": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "total pages of records"
+                },
+                "totalElements": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "total number of records"
+                },
+                "recommendData": {
+                    "type": "array",
+                    "description": "the list of current page records",
+                    "items": {
+                        "$ref": "#/definitions/SearchRecord"
+                    }
+                }
+            },
+            "title": "SearchResult",
+            "description": "wrapper of records of '/harvest' and '/search' API"
+        }
+    }
+}
