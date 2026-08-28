@@ -1,4 +1,4 @@
-"""Smoke tests for funapi-sciencedb (import name: sciencedb).
+"""Smoke tests for funapi-sciencedb (import name: funapi_sciencedb).
 
 funapi-sciencedb is an auto-generated OpenAPI client (via openapi-python-client)
 for the ScienceDB (scidb.cn) Open API. These tests only check that the client
@@ -12,19 +12,19 @@ from unittest.mock import MagicMock
 import httpx
 import pytest
 
-from sciencedb import AuthenticatedClient, Client
-from sciencedb.api.open_api_controller import harvest_using_get, search_using_get
-from sciencedb.api.sushi_controller import get_api_status
-from sciencedb.models.api_result_search_result import APIResultSearchResult
-from sciencedb.types import UNSET
+from funapi_sciencedb import AuthenticatedClient, Client
+from funapi_sciencedb.api.open_api_controller import harvest_using_get, search_using_get
+from funapi_sciencedb.api.sushi_controller import get_api_status
+from funapi_sciencedb.models.api_result_search_result import APIResultSearchResult
+from funapi_sciencedb.types import UNSET
 
 
 def test_import_top_level_package():
     """Importing the top-level package and its main symbols should succeed."""
-    import sciencedb
+    import funapi_sciencedb
 
-    assert hasattr(sciencedb, "Client")
-    assert hasattr(sciencedb, "AuthenticatedClient")
+    assert hasattr(funapi_sciencedb, "Client")
+    assert hasattr(funapi_sciencedb, "AuthenticatedClient")
 
 
 def test_client_construction():

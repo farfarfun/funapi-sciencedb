@@ -44,7 +44,7 @@ load_openapi_ori()
 convert_openapi_v3()
 generate_api(
     path=Path(openapi_filepath_v3),
-    output_path=Path("./src/sciencedb"),
+    output_path=Path("./src/funapi_sciencedb"),
     meta=MetaType.NONE,
     overwrite=True,
 )
