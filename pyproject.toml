@@ -16,4 +16,4 @@ build-backend = "hatchling.build"
 packages = ["src/funapi_sciencedb", "src/sciencedb"]
 
 [dependency-groups]
-dev = [ "pytest>=7.0",]
+dev = [ "pytest>=9.0.3",]
