@@ -7,16 +7,28 @@ expected when the underlying HTTP layer is mocked. No real network calls are
 made against scidb.cn.
 """
 
+import asyncio
 from unittest.mock import MagicMock
 
 import httpx
 import pytest
 
 from funapi_sciencedb import AuthenticatedClient, Client
-from funapi_sciencedb.api.open_api_controller import harvest_using_get, search_using_get
-from funapi_sciencedb.api.sushi_controller import get_api_status
+from funapi_sciencedb.api.open_api_controller import (
+    harvest_using_get,
+    json_using_get,
+    metrics_using_get,
+    search_using_get,
+)
+from funapi_sciencedb.api.sushi_controller import (
+    get_api_status,
+    get_report_by_id_using_get,
+    get_reports,
+)
+from funapi_sciencedb.models.api_result_metrics_result import APIResultMetricsResult
 from funapi_sciencedb.models.api_result_search_result import APIResultSearchResult
-from funapi_sciencedb.types import UNSET
+from funapi_sciencedb.models.sushi_report import SUSHIReport
+from funapi_sciencedb.models.sushi_report_page import SUSHIReportPage
 
 
 def test_import_top_level_package():
@@ -161,6 +173,175 @@ def test_search_using_get_unexpected_status_returns_none_by_default(monkeypatch)
     result = search_using_get.sync(client=client)
 
     assert result is None
+
+
+def test_metrics_using_get_sync_with_mocked_http(monkeypatch):
+    """open_api_controller.metrics_using_get.sync() parses a mocked response."""
+    client = Client(base_url="https://example.invalid/open-api/v2")
+
+    fake_response = httpx.Response(
+        status_code=200,
+        json={"code": 20000, "message": "ok"},
+        request=httpx.Request("GET", "https://example.invalid/open-api/v2/metrics"),
+    )
+    mock_request = MagicMock(return_value=fake_response)
+    monkeypatch.setattr(client.get_httpx_client(), "request", mock_request)
+
+    result = metrics_using_get.sync(client=client, doi="10.11922/fake.doi")
+
+    mock_request.assert_called_once()
+    assert mock_request.call_args.kwargs["params"]["doi"] == "10.11922/fake.doi"
+    assert isinstance(result, APIResultMetricsResult)
+    assert result.code == 20000
+
+
+def test_json_using_get_sync_returns_raw_string(monkeypatch):
+    """open_api_controller.json_using_get.sync() returns the raw JSON-as-string body."""
+    client = Client(base_url="https://example.invalid/open-api/v2")
+
+    fake_response = httpx.Response(
+        status_code=200,
+        json="raw-json-payload",
+        request=httpx.Request("GET", "https://example.invalid/open-api/v2/json"),
+    )
+    monkeypatch.setattr(
+        client.get_httpx_client(), "request", MagicMock(return_value=fake_response)
+    )
+
+    result = json_using_get.sync(client=client, doi="10.11922/fake.doi")
+
+    assert result == "raw-json-payload"
+
+
+def test_json_using_get_unexpected_status_returns_none_by_default(monkeypatch):
+    """Non-200 responses fall back to None unless raise_on_unexpected_status is set."""
+    client = Client(base_url="https://example.invalid/open-api/v2")
+
+    fake_response = httpx.Response(
+        status_code=404,
+        json={"error": "not found"},
+        request=httpx.Request("GET", "https://example.invalid/open-api/v2/json"),
+    )
+    monkeypatch.setattr(
+        client.get_httpx_client(), "request", MagicMock(return_value=fake_response)
+    )
+
+    result = json_using_get.sync(client=client, doi="does-not-exist")
+
+    assert result is None
+
+
+def test_get_reports_sync_with_default_pagination(monkeypatch):
+    """sushi_controller.get_reports.sync() uses page[number]=1 / page[size]=10 by default."""
+    client = AuthenticatedClient(
+        base_url="https://example.invalid/open-api/v2", token="fake-token"
+    )
+
+    fake_response = httpx.Response(
+        status_code=200,
+        json={"reports": [], "meta": {}},
+        request=httpx.Request("GET", "https://example.invalid/open-api/v2/reports"),
+    )
+    mock_request = MagicMock(return_value=fake_response)
+    monkeypatch.setattr(client.get_httpx_client(), "request", mock_request)
+
+    result = get_reports.sync(client=client)
+
+    assert mock_request.call_args.kwargs["params"]["page[number]"] == 1
+    assert mock_request.call_args.kwargs["params"]["page[size]"] == 10
+    assert isinstance(result, SUSHIReportPage)
+
+
+def test_get_report_by_id_using_get_sync_with_mocked_http(monkeypatch):
+    """sushi_controller.get_report_by_id_using_get.sync() builds the path with the report id."""
+    client = AuthenticatedClient(
+        base_url="https://example.invalid/open-api/v2", token="fake-token"
+    )
+
+    fake_response = httpx.Response(
+        status_code=200,
+        json={"report": {}},
+        request=httpx.Request(
+            "GET", "https://example.invalid/open-api/v2/report/TR"
+        ),
+    )
+    mock_request = MagicMock(return_value=fake_response)
+    monkeypatch.setattr(client.get_httpx_client(), "request", mock_request)
+
+    result = get_report_by_id_using_get.sync(id="TR", client=client)
+
+    assert mock_request.call_args.kwargs["url"] == "/report/TR"
+    assert isinstance(result, SUSHIReport)
+
+
+def test_get_report_by_id_using_get_empty_id_returns_none(monkeypatch):
+    """Non-200 responses (e.g. unknown report id) fall back to None."""
+    client = AuthenticatedClient(
+        base_url="https://example.invalid/open-api/v2", token="fake-token"
+    )
+
+    fake_response = httpx.Response(
+        status_code=404,
+        json={"error": "unknown report"},
+        request=httpx.Request(
+            "GET", "https://example.invalid/open-api/v2/report/does-not-exist"
+        ),
+    )
+    monkeypatch.setattr(
+        client.get_httpx_client(), "request", MagicMock(return_value=fake_response)
+    )
+
+    result = get_report_by_id_using_get.sync(id="does-not-exist", client=client)
+
+    assert result is None
+
+
+def test_search_using_get_asyncio_with_mocked_http(monkeypatch):
+    """search_using_get.asyncio() (the async counterpart of sync()) also avoids real network calls.
+
+    No pytest-asyncio plugin is declared as a dependency, so the coroutine is
+    driven directly with ``asyncio.run`` instead of an ``async def`` test.
+    """
+    client = Client(base_url="https://example.invalid/open-api/v2")
+
+    fake_response = httpx.Response(
+        status_code=200,
+        json={"code": 20000, "message": "ok"},
+        request=httpx.Request("GET", "https://example.invalid/open-api/v2/search"),
+    )
+
+    async def fake_request(*args, **kwargs):
+        return fake_response
+
+    monkeypatch.setattr(client.get_async_httpx_client(), "request", fake_request)
+
+    result = asyncio.run(search_using_get.asyncio(client=client, page=1, size=10))
+
+    assert isinstance(result, APIResultSearchResult)
+    assert result.code == 20000
+
+
+def test_get_api_status_asyncio_detailed_returns_response_wrapper(monkeypatch):
+    """get_api_status.asyncio_detailed() returns the full Response wrapper for the async path."""
+    client = AuthenticatedClient(
+        base_url="https://example.invalid/open-api/v2", token="fake-token"
+    )
+
+    fake_response = httpx.Response(
+        status_code=200,
+        json=[{"ServiceActive": False, "Description": "maintenance"}],
+        request=httpx.Request("GET", "https://example.invalid/open-api/v2/status"),
+    )
+
+    async def fake_request(*args, **kwargs):
+        return fake_response
+
+    monkeypatch.setattr(client.get_async_httpx_client(), "request", fake_request)
+
+    response = asyncio.run(get_api_status.asyncio_detailed(client=client))
+
+    assert response.status_code == 200
+    assert response.parsed[0].service_active is False
 
 
 def test_real_credentials_not_available():
