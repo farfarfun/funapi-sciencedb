@@ -1,9 +1,10 @@
 [project]
 name = "funapi-sciencedb"
-version = "1.1.0"
-description = "Add your description here"
+version = "1.1.1"
+description = "科学数据银行（ScienceDB）Open API 的 Python 客户端，由 openapi-python-client 根据官方 OpenAPI 文档自动生成"
 readme = "README.md"
 requires-python = ">=3.10"
+license = "MIT"
 dependencies = [ "httpx>=0.20.0", "attrs>=22.2.0", "python-dateutil>=2.8.2",]
 
 [build-system]
@@ -17,3 +18,15 @@ packages = ["src/funapi_sciencedb", "src/sciencedb"]
 
 [dependency-groups]
 dev = [ "pytest>=9.0.3",]
+# generate.py 用来重新拉取 ScienceDB OpenAPI 文档并重新生成客户端代码，
+# 这几个依赖只有跑生成脚本时才需要，不进最终发布包。
+generate = [ "requests>=2.31.0", "funapi>=1.0.2", "openapi-python-client>=0.21.0",]
+
+[tool.ruff]
+# src/funapi_sciencedb/{client.py,types.py,errors.py,api/**,models/**,__init__.py}
+# 是 generate.py 通过 openapi-python-client 全量生成的代码，用的是该工具自带模板
+# （英文 docstring、typing.Optional/Dict/Union 旧式写法），手工改写没有意义——下次
+# `uv run python generate.py` 会整体覆盖。openapi-python-client 当前不支持自定义
+# 类型标注风格/docstring 语言的模板配置项，这是已知的生成器限制，此处显式排除，
+# 只对仓库里手写的代码做 ruff 检查。
+extend-exclude = ["src/funapi_sciencedb"]
