@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union
+from typing import TYPE_CHECKING, Any, TypeVar, Union
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -21,14 +21,14 @@ class SUSHIReport:
     """
 
     report: Union[Unset, "COUNTERDatasetReport"] = UNSET
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
-        report: Union[Unset, Dict[str, Any]] = UNSET
+    def to_dict(self) -> dict[str, Any]:
+        report: Unset | dict[str, Any] = UNSET
         if not isinstance(self.report, Unset):
             report = self.report.to_dict()
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if report is not UNSET:
@@ -37,12 +37,12 @@ class SUSHIReport:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls, src_dict: dict[str, Any]) -> T:
         from ..models.counter_dataset_report import COUNTERDatasetReport
 
         d = src_dict.copy()
         _report = d.pop("report", UNSET)
-        report: Union[Unset, COUNTERDatasetReport]
+        report: Unset | COUNTERDatasetReport
         if isinstance(_report, Unset):
             report = UNSET
         else:
@@ -56,7 +56,7 @@ class SUSHIReport:
         return sushi_report
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

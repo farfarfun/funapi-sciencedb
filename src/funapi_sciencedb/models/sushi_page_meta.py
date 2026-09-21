@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -13,24 +13,24 @@ class SUSHIPageMeta:
     """page wrapper of reports
 
     Attributes:
-        page (Union[Unset, int]): page number. Example: 1.
-        total (Union[Unset, int]): count of reports. Example: 100.
-        total_pages (Union[Unset, int]): count of pages. Example: 10.
+        page (Unset | int): page number. Example: 1.
+        total (Unset | int): count of reports. Example: 100.
+        total_pages (Unset | int): count of pages. Example: 10.
     """
 
-    page: Union[Unset, int] = UNSET
-    total: Union[Unset, int] = UNSET
-    total_pages: Union[Unset, int] = UNSET
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    page: Unset | int = UNSET
+    total: Unset | int = UNSET
+    total_pages: Unset | int = UNSET
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         page = self.page
 
         total = self.total
 
         total_pages = self.total_pages
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if page is not UNSET:
@@ -43,7 +43,7 @@ class SUSHIPageMeta:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls, src_dict: dict[str, Any]) -> T:
         d = src_dict.copy()
         page = d.pop("page", UNSET)
 
@@ -61,7 +61,7 @@ class SUSHIPageMeta:
         return sushi_page_meta
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from typing import Any, Dict, Optional, Union, cast
+from typing import Any, cast
 
 import httpx
 
@@ -11,14 +11,14 @@ from ...types import UNSET, Response
 def _get_kwargs(
     *,
     doi: str,
-) -> Dict[str, Any]:
-    params: Dict[str, Any] = {}
+) -> dict[str, Any]:
+    params: dict[str, Any] = {}
 
     params["doi"] = doi
 
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
-    _kwargs: Dict[str, Any] = {
+    _kwargs: dict[str, Any] = {
         "method": "get",
         "url": "/json",
         "params": params,
@@ -28,8 +28,8 @@ def _get_kwargs(
 
 
 def _parse_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[str]:
+    *, client: AuthenticatedClient | Client, response: httpx.Response
+) -> str | None:
     if response.status_code == 200:
         response_200 = cast(str, response.json())
         return response_200
@@ -40,7 +40,7 @@ def _parse_response(
 
 
 def _build_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
+    *, client: AuthenticatedClient | Client, response: httpx.Response
 ) -> Response[str]:
     return Response(
         status_code=HTTPStatus(response.status_code),
@@ -52,7 +52,7 @@ def _build_response(
 
 def sync_detailed(
     *,
-    client: Union[AuthenticatedClient, Client],
+    client: AuthenticatedClient | Client,
     doi: str,
 ) -> Response[str]:
     """get dataset's detail information by it's doi
@@ -83,9 +83,9 @@ def sync_detailed(
 
 def sync(
     *,
-    client: Union[AuthenticatedClient, Client],
+    client: AuthenticatedClient | Client,
     doi: str,
-) -> Optional[str]:
+) -> str | None:
     """get dataset's detail information by it's doi
 
      information's format is referenced by https://schema.org/Dataset
@@ -109,7 +109,7 @@ def sync(
 
 async def asyncio_detailed(
     *,
-    client: Union[AuthenticatedClient, Client],
+    client: AuthenticatedClient | Client,
     doi: str,
 ) -> Response[str]:
     """get dataset's detail information by it's doi
@@ -138,9 +138,9 @@ async def asyncio_detailed(
 
 async def asyncio(
     *,
-    client: Union[AuthenticatedClient, Client],
+    client: AuthenticatedClient | Client,
     doi: str,
-) -> Optional[str]:
+) -> str | None:
     """get dataset's detail information by it's doi
 
      information's format is referenced by https://schema.org/Dataset

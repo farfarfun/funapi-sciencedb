@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -13,34 +13,34 @@ class SearchRecord:
     """dataset's brief record of '/harvest' and '/search' API
 
     Attributes:
-        clicks (Union[Unset, int]):
-        language (Union[Unset, str]):
-        reference_number (Union[Unset, int]):
-        title (Union[Unset, str]): dataset's title
-        introduction (Union[Unset, str]): dataset's introduction
-        keyword (Union[Unset, str]): dataset's keywords, put together in quotation marks Example: kw_1;kw_2;kw_3.
-        author (Union[Unset, str]): dataset's authors, put together in quotation marks Example: 2021-08-11 18:20:51.
-        publish_date (Union[Unset, str]): publish date in ScienceDB Example: author_1;author_2;author_3.
-        taxonomy (Union[Unset, str]): taxonomy in ScienceDB,put together in quotation marks,format is 'code'-'taxonomy'
+        clicks (Unset | int):
+        language (Unset | str):
+        reference_number (Unset | int):
+        title (Unset | str): dataset's title
+        introduction (Unset | str): dataset's introduction
+        keyword (Unset | str): dataset's keywords, put together in quotation marks Example: kw_1;kw_2;kw_3.
+        author (Unset | str): dataset's authors, put together in quotation marks Example: 2021-08-11 18:20:51.
+        publish_date (Unset | str): publish date in ScienceDB Example: author_1;author_2;author_3.
+        taxonomy (Unset | str): taxonomy in ScienceDB,put together in quotation marks,format is 'code'-'taxonomy'
             Example: 170-Earth science;00-Others.
-        year (Union[Unset, str]): publish year in ScienceDB Example: 2021.
-        doi (Union[Unset, str]): dataset's doi Example: 10.11922/sciencedb.00101.
+        year (Unset | str): publish year in ScienceDB Example: 2021.
+        doi (Unset | str): dataset's doi Example: 10.11922/sciencedb.00101.
     """
 
-    clicks: Union[Unset, int] = UNSET
-    language: Union[Unset, str] = UNSET
-    reference_number: Union[Unset, int] = UNSET
-    title: Union[Unset, str] = UNSET
-    introduction: Union[Unset, str] = UNSET
-    keyword: Union[Unset, str] = UNSET
-    author: Union[Unset, str] = UNSET
-    publish_date: Union[Unset, str] = UNSET
-    taxonomy: Union[Unset, str] = UNSET
-    year: Union[Unset, str] = UNSET
-    doi: Union[Unset, str] = UNSET
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    clicks: Unset | int = UNSET
+    language: Unset | str = UNSET
+    reference_number: Unset | int = UNSET
+    title: Unset | str = UNSET
+    introduction: Unset | str = UNSET
+    keyword: Unset | str = UNSET
+    author: Unset | str = UNSET
+    publish_date: Unset | str = UNSET
+    taxonomy: Unset | str = UNSET
+    year: Unset | str = UNSET
+    doi: Unset | str = UNSET
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         clicks = self.clicks
 
         language = self.language
@@ -63,7 +63,7 @@ class SearchRecord:
 
         doi = self.doi
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if clicks is not UNSET:
@@ -92,7 +92,7 @@ class SearchRecord:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls, src_dict: dict[str, Any]) -> T:
         d = src_dict.copy()
         clicks = d.pop("clicks", UNSET)
 
@@ -134,7 +134,7 @@ class SearchRecord:
         return search_record
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

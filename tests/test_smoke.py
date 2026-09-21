@@ -261,9 +261,7 @@ def test_get_report_by_id_using_get_sync_with_mocked_http(monkeypatch):
     fake_response = httpx.Response(
         status_code=200,
         json={"report": {}},
-        request=httpx.Request(
-            "GET", "https://example.invalid/open-api/v2/report/TR"
-        ),
+        request=httpx.Request("GET", "https://example.invalid/open-api/v2/report/TR"),
     )
     mock_request = MagicMock(return_value=fake_response)
     monkeypatch.setattr(client.get_httpx_client(), "request", mock_request)

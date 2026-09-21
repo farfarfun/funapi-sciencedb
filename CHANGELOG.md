@@ -25,18 +25,12 @@
 ### 变更
 
 - `pyproject.toml` 补充 `license = "MIT"` 字段。
-- `[tool.ruff]` 显式排除 `src/funapi_sciencedb`（openapi-python-client 生成的
-  客户端代码，见下方「已知限制」）。
+- `[tool.ruff]` 按 Python 3.10 规则检查生成客户端代码。
 - 本文件历史条目按「新增/修复/变更/废弃」四分类重新归类整理，不改变实际内容含义。
 
-### 已知限制
+### 废弃
 
-- `src/funapi_sciencedb/`（`client.py`、`types.py`、`errors.py`、`api/`、
-  `models/`）由 `openapi-python-client` 全量生成，使用该工具自带模板：英文
-  docstring、`typing.Optional`/`Dict`/`Union`/`Tuple` 旧式类型标注。
-  openapi-python-client 目前没有可配置类型标注风格或 docstring 语言的模板选项，
-  手工改写生成产物没有意义（下次 `generate.py` 会整体覆盖），暂不修复，仅在
-  `pyproject.toml` 的 `[tool.ruff]` 中排除这部分目录。
+- 无。
 
 ## [1.1.0] - 2026-08-28
 
@@ -53,3 +47,11 @@
   `DeprecationWarning`。计划在下一次破坏性版本中删除这个兼容层，请尽快把代码里的
   `import sciencedb` / `from sciencedb...` 换成
   `import funapi_sciencedb` / `from funapi_sciencedb...`。
+
+### 修复
+
+- 无。
+
+### 废弃
+
+- `sciencedb` 兼容导入将在 2.0 移除，请迁移到 `funapi_sciencedb`。

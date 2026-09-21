@@ -1,5 +1,5 @@
 import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -18,20 +18,20 @@ class COUNTERDatasetPeriod:
         end_date (Union[Unset, datetime.datetime]):
     """
 
-    begin_date: Union[Unset, datetime.datetime] = UNSET
-    end_date: Union[Unset, datetime.datetime] = UNSET
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    begin_date: Unset | datetime.datetime = UNSET
+    end_date: Unset | datetime.datetime = UNSET
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
-        begin_date: Union[Unset, str] = UNSET
+    def to_dict(self) -> dict[str, Any]:
+        begin_date: Unset | str = UNSET
         if not isinstance(self.begin_date, Unset):
             begin_date = self.begin_date.isoformat()
 
-        end_date: Union[Unset, str] = UNSET
+        end_date: Unset | str = UNSET
         if not isinstance(self.end_date, Unset):
             end_date = self.end_date.isoformat()
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if begin_date is not UNSET:
@@ -42,17 +42,17 @@ class COUNTERDatasetPeriod:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls, src_dict: dict[str, Any]) -> T:
         d = src_dict.copy()
         _begin_date = d.pop("begin-date", UNSET)
-        begin_date: Union[Unset, datetime.datetime]
+        begin_date: Unset | datetime.datetime
         if isinstance(_begin_date, Unset):
             begin_date = UNSET
         else:
             begin_date = isoparse(_begin_date)
 
         _end_date = d.pop("end-date", UNSET)
-        end_date: Union[Unset, datetime.datetime]
+        end_date: Unset | datetime.datetime
         if isinstance(_end_date, Unset):
             end_date = UNSET
         else:
@@ -67,7 +67,7 @@ class COUNTERDatasetPeriod:
         return counter_dataset_period
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

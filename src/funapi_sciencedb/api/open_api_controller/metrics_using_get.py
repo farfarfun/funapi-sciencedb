@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from typing import Any, Dict, Optional, Union
+from typing import Any
 
 import httpx
 
@@ -12,14 +12,14 @@ from ...types import UNSET, Response
 def _get_kwargs(
     *,
     doi: str,
-) -> Dict[str, Any]:
-    params: Dict[str, Any] = {}
+) -> dict[str, Any]:
+    params: dict[str, Any] = {}
 
     params["doi"] = doi
 
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
-    _kwargs: Dict[str, Any] = {
+    _kwargs: dict[str, Any] = {
         "method": "get",
         "url": "/metrics",
         "params": params,
@@ -29,8 +29,8 @@ def _get_kwargs(
 
 
 def _parse_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[APIResultMetricsResult]:
+    *, client: AuthenticatedClient | Client, response: httpx.Response
+) -> APIResultMetricsResult | None:
     if response.status_code == 200:
         response_200 = APIResultMetricsResult.from_dict(response.json())
 
@@ -42,7 +42,7 @@ def _parse_response(
 
 
 def _build_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
+    *, client: AuthenticatedClient | Client, response: httpx.Response
 ) -> Response[APIResultMetricsResult]:
     return Response(
         status_code=HTTPStatus(response.status_code),
@@ -54,7 +54,7 @@ def _build_response(
 
 def sync_detailed(
     *,
-    client: Union[AuthenticatedClient, Client],
+    client: AuthenticatedClient | Client,
     doi: str,
 ) -> Response[APIResultMetricsResult]:
     """search dataset metrics by doi
@@ -85,9 +85,9 @@ def sync_detailed(
 
 def sync(
     *,
-    client: Union[AuthenticatedClient, Client],
+    client: AuthenticatedClient | Client,
     doi: str,
-) -> Optional[APIResultMetricsResult]:
+) -> APIResultMetricsResult | None:
     """search dataset metrics by doi
 
      search dataset metrics by doi
@@ -111,7 +111,7 @@ def sync(
 
 async def asyncio_detailed(
     *,
-    client: Union[AuthenticatedClient, Client],
+    client: AuthenticatedClient | Client,
     doi: str,
 ) -> Response[APIResultMetricsResult]:
     """search dataset metrics by doi
@@ -140,9 +140,9 @@ async def asyncio_detailed(
 
 async def asyncio(
     *,
-    client: Union[AuthenticatedClient, Client],
+    client: AuthenticatedClient | Client,
     doi: str,
-) -> Optional[APIResultMetricsResult]:
+) -> APIResultMetricsResult | None:
     """search dataset metrics by doi
 
      search dataset metrics by doi

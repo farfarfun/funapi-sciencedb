@@ -1,5 +1,5 @@
 import datetime
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union
+from typing import TYPE_CHECKING, Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -31,61 +31,59 @@ class SUSHIReportHeader:
                 parameter of the request. Example: DSR.
             report_name (str): The long name of the report. Example: Dataset Report.
             created (Union[Unset, datetime.datetime]): Time the report was prepared
-            created_by (Union[Unset, str]): Name of the organization producing the report. Example: Science Data Bank.
-            exceptions (Union[Unset, List['SUSHIErrorModel']]): Series of exceptions encounted when preparing the report.
-            report_attributes (Union[Unset, List['SUSHIReportHeaderReportAttributesItem']]): Zero or more additional
+            created_by (Unset | str): Name of the organization producing the report. Example: Science Data Bank.
+            exceptions (Union[Unset, list['SUSHIErrorModel']]): Series of exceptions encounted when preparing the report.
+            report_attributes (Union[Unset, list['SUSHIReportHeaderReportAttributesItem']]): Zero or more additional
                 attributes applied to the report. Attributes inform the level of detail in the report.
-            report_filters (Union[Unset, List['SUSHIReportHeaderReportFiltersItem']]): Zero or more report filters used for
+            report_filters (Union[Unset, list['SUSHIReportHeaderReportFiltersItem']]): Zero or more report filters used for
                 this report.  Typically  reflect filters provided on the Request.  Filters limit the data to be reported on.
     """
 
     release: str
     report_id: str
     report_name: str
-    created: Union[Unset, datetime.datetime] = UNSET
-    created_by: Union[Unset, str] = UNSET
-    exceptions: Union[Unset, List["SUSHIErrorModel"]] = UNSET
-    report_attributes: Union[Unset, List["SUSHIReportHeaderReportAttributesItem"]] = (
-        UNSET
-    )
-    report_filters: Union[Unset, List["SUSHIReportHeaderReportFiltersItem"]] = UNSET
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    created: Unset | datetime.datetime = UNSET
+    created_by: Unset | str = UNSET
+    exceptions: Unset | list["SUSHIErrorModel"] = UNSET
+    report_attributes: Unset | list["SUSHIReportHeaderReportAttributesItem"] = UNSET
+    report_filters: Unset | list["SUSHIReportHeaderReportFiltersItem"] = UNSET
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         release = self.release
 
         report_id = self.report_id
 
         report_name = self.report_name
 
-        created: Union[Unset, str] = UNSET
+        created: Unset | str = UNSET
         if not isinstance(self.created, Unset):
             created = self.created.isoformat()
 
         created_by = self.created_by
 
-        exceptions: Union[Unset, List[Dict[str, Any]]] = UNSET
+        exceptions: Unset | list[dict[str, Any]] = UNSET
         if not isinstance(self.exceptions, Unset):
             exceptions = []
             for exceptions_item_data in self.exceptions:
                 exceptions_item = exceptions_item_data.to_dict()
                 exceptions.append(exceptions_item)
 
-        report_attributes: Union[Unset, List[Dict[str, Any]]] = UNSET
+        report_attributes: Unset | list[dict[str, Any]] = UNSET
         if not isinstance(self.report_attributes, Unset):
             report_attributes = []
             for report_attributes_item_data in self.report_attributes:
                 report_attributes_item = report_attributes_item_data.to_dict()
                 report_attributes.append(report_attributes_item)
 
-        report_filters: Union[Unset, List[Dict[str, Any]]] = UNSET
+        report_filters: Unset | list[dict[str, Any]] = UNSET
         if not isinstance(self.report_filters, Unset):
             report_filters = []
             for report_filters_item_data in self.report_filters:
                 report_filters_item = report_filters_item_data.to_dict()
                 report_filters.append(report_filters_item)
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -108,7 +106,7 @@ class SUSHIReportHeader:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls, src_dict: dict[str, Any]) -> T:
         from ..models.sushi_error_model import SUSHIErrorModel
         from ..models.sushi_report_header_report_attributes_item import (
             SUSHIReportHeaderReportAttributesItem,
@@ -125,7 +123,7 @@ class SUSHIReportHeader:
         report_name = d.pop("report-name")
 
         _created = d.pop("created", UNSET)
-        created: Union[Unset, datetime.datetime]
+        created: Unset | datetime.datetime
         if isinstance(_created, Unset):
             created = UNSET
         else:
@@ -173,7 +171,7 @@ class SUSHIReportHeader:
         return sushi_report_header
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

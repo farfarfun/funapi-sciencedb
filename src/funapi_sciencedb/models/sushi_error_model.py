@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -17,19 +17,19 @@ class SUSHIErrorModel:
         code (int): Error number. See table of error. Example: 3040.
         message (str): Text describing the error. Example: Partial Data Returned..
         severity (SUSHIErrorModelSeverity): Severity of the error. Example: Warning.
-        data (Union[Unset, str]): Additional data provided by the server to clarify the error. Example: Usage data has
+        data (Unset | str): Additional data provided by the server to clarify the error. Example: Usage data has
             not been processed for all requested months..
-        help_url (Union[Unset, str]): URL describing error details.
+        help_url (Unset | str): URL describing error details.
     """
 
     code: int
     message: str
     severity: SUSHIErrorModelSeverity
-    data: Union[Unset, str] = UNSET
-    help_url: Union[Unset, str] = UNSET
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    data: Unset | str = UNSET
+    help_url: Unset | str = UNSET
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         code = self.code
 
         message = self.message
@@ -40,7 +40,7 @@ class SUSHIErrorModel:
 
         help_url = self.help_url
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -57,7 +57,7 @@ class SUSHIErrorModel:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls, src_dict: dict[str, Any]) -> T:
         d = src_dict.copy()
         code = d.pop("Code")
 
@@ -81,7 +81,7 @@ class SUSHIErrorModel:
         return sushi_error_model
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

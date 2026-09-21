@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -13,21 +13,21 @@ class MetricsResult:
     """wrapper of records of '/harvest' and '/search' and '/metrics' API
 
     Attributes:
-        title_zh (Union[Unset, str]): Chinese title of dataset
-        title_en (Union[Unset, str]): English title of dataset
-        visit (Union[Unset, int]): Number of data set accesses
-        download (Union[Unset, int]): Number of data set downloads
-        ref_papers (Union[Unset, int]): The number of papers cited in the dataset
+        title_zh (Unset | str): Chinese title of dataset
+        title_en (Unset | str): English title of dataset
+        visit (Unset | int): Number of data set accesses
+        download (Unset | int): Number of data set downloads
+        ref_papers (Unset | int): The number of papers cited in the dataset
     """
 
-    title_zh: Union[Unset, str] = UNSET
-    title_en: Union[Unset, str] = UNSET
-    visit: Union[Unset, int] = UNSET
-    download: Union[Unset, int] = UNSET
-    ref_papers: Union[Unset, int] = UNSET
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    title_zh: Unset | str = UNSET
+    title_en: Unset | str = UNSET
+    visit: Unset | int = UNSET
+    download: Unset | int = UNSET
+    ref_papers: Unset | int = UNSET
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         title_zh = self.title_zh
 
         title_en = self.title_en
@@ -38,7 +38,7 @@ class MetricsResult:
 
         ref_papers = self.ref_papers
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if title_zh is not UNSET:
@@ -55,7 +55,7 @@ class MetricsResult:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls, src_dict: dict[str, Any]) -> T:
         d = src_dict.copy()
         title_zh = d.pop("titleZh", UNSET)
 
@@ -79,7 +79,7 @@ class MetricsResult:
         return metrics_result
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

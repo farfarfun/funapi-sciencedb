@@ -8,11 +8,11 @@ from funapi.convert import convert_openapi_v3
 from funapi.generate import generate_api
 from openapi_python_client import MetaType
 
-openapi_filepath_ori = "openapi-ori.json"
-openapi_filepath_v3 = "openapi-v3.json"
+OPENAPI_FILEPATH_ORI = "openapi-ori.json"
+OPENAPI_FILEPATH_V3 = "openapi-v3.json"
 
 
-def load_openapi_ori():
+def load_openapi_ori() -> None:
     """拉取 ScienceDB 官方 OpenAPI 文档，写入本地 `openapi-ori.json`。
 
     `acw_tc` / `cdn_sec_tc` 是阿里云 WAF 下发的反爬会话 cookie（不是账号凭据），
@@ -47,14 +47,14 @@ def load_openapi_ori():
     cookies = {k: v for k, v in cookies.items() if v}
 
     response = requests.get(url, headers=headers, cookies=cookies)
-    with open(openapi_filepath_ori, "w", encoding="utf-8") as f:
+    with open(OPENAPI_FILEPATH_ORI, "w", encoding="utf-8") as f:
         f.write(json.dumps(response.json(), indent=4, ensure_ascii=False))
 
 
 load_openapi_ori()
 convert_openapi_v3()
 generate_api(
-    path=Path(openapi_filepath_v3),
+    path=Path(OPENAPI_FILEPATH_V3),
     output_path=Path("./src/funapi_sciencedb"),
     meta=MetaType.NONE,
     overwrite=True,

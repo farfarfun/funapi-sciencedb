@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from typing import Any, Dict, Optional, Union
+from typing import Any
 
 import httpx
 
@@ -11,12 +11,12 @@ from ...types import UNSET, Response, Unset
 
 def _get_kwargs(
     *,
-    end_time: Union[Unset, str] = "2099-01-01",
-    page: Union[Unset, int] = 1,
-    size: Union[Unset, int] = 10,
-    start_time: Union[Unset, str] = "1970-01-01",
-) -> Dict[str, Any]:
-    params: Dict[str, Any] = {}
+    end_time: Unset | str = "2099-01-01",
+    page: Unset | int = 1,
+    size: Unset | int = 10,
+    start_time: Unset | str = "1970-01-01",
+) -> dict[str, Any]:
+    params: dict[str, Any] = {}
 
     params["end_time"] = end_time
 
@@ -28,7 +28,7 @@ def _get_kwargs(
 
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
-    _kwargs: Dict[str, Any] = {
+    _kwargs: dict[str, Any] = {
         "method": "get",
         "url": "/harvest",
         "params": params,
@@ -38,8 +38,8 @@ def _get_kwargs(
 
 
 def _parse_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[APIResultSearchResult]:
+    *, client: AuthenticatedClient | Client, response: httpx.Response
+) -> APIResultSearchResult | None:
     if response.status_code == 200:
         response_200 = APIResultSearchResult.from_dict(response.json())
 
@@ -51,7 +51,7 @@ def _parse_response(
 
 
 def _build_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
+    *, client: AuthenticatedClient | Client, response: httpx.Response
 ) -> Response[APIResultSearchResult]:
     return Response(
         status_code=HTTPStatus(response.status_code),
@@ -63,21 +63,21 @@ def _build_response(
 
 def sync_detailed(
     *,
-    client: Union[AuthenticatedClient, Client],
-    end_time: Union[Unset, str] = "2099-01-01",
-    page: Union[Unset, int] = 1,
-    size: Union[Unset, int] = 10,
-    start_time: Union[Unset, str] = "1970-01-01",
+    client: AuthenticatedClient | Client,
+    end_time: Unset | str = "2099-01-01",
+    page: Unset | int = 1,
+    size: Unset | int = 10,
+    start_time: Unset | str = "1970-01-01",
 ) -> Response[APIResultSearchResult]:
     """harvest dataset by dataset's publish time period(start_time and end_time)
 
      result is order by publish time desc
 
     Args:
-        end_time (Union[Unset, str]):  Default: '2099-01-01'.
-        page (Union[Unset, int]):  Default: 1.
-        size (Union[Unset, int]):  Default: 10.
-        start_time (Union[Unset, str]):  Default: '1970-01-01'.
+        end_time (Unset | str):  Default: '2099-01-01'.
+        page (Unset | int):  Default: 1.
+        size (Unset | int):  Default: 10.
+        start_time (Unset | str):  Default: '1970-01-01'.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -103,21 +103,21 @@ def sync_detailed(
 
 def sync(
     *,
-    client: Union[AuthenticatedClient, Client],
-    end_time: Union[Unset, str] = "2099-01-01",
-    page: Union[Unset, int] = 1,
-    size: Union[Unset, int] = 10,
-    start_time: Union[Unset, str] = "1970-01-01",
-) -> Optional[APIResultSearchResult]:
+    client: AuthenticatedClient | Client,
+    end_time: Unset | str = "2099-01-01",
+    page: Unset | int = 1,
+    size: Unset | int = 10,
+    start_time: Unset | str = "1970-01-01",
+) -> APIResultSearchResult | None:
     """harvest dataset by dataset's publish time period(start_time and end_time)
 
      result is order by publish time desc
 
     Args:
-        end_time (Union[Unset, str]):  Default: '2099-01-01'.
-        page (Union[Unset, int]):  Default: 1.
-        size (Union[Unset, int]):  Default: 10.
-        start_time (Union[Unset, str]):  Default: '1970-01-01'.
+        end_time (Unset | str):  Default: '2099-01-01'.
+        page (Unset | int):  Default: 1.
+        size (Unset | int):  Default: 10.
+        start_time (Unset | str):  Default: '1970-01-01'.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -138,21 +138,21 @@ def sync(
 
 async def asyncio_detailed(
     *,
-    client: Union[AuthenticatedClient, Client],
-    end_time: Union[Unset, str] = "2099-01-01",
-    page: Union[Unset, int] = 1,
-    size: Union[Unset, int] = 10,
-    start_time: Union[Unset, str] = "1970-01-01",
+    client: AuthenticatedClient | Client,
+    end_time: Unset | str = "2099-01-01",
+    page: Unset | int = 1,
+    size: Unset | int = 10,
+    start_time: Unset | str = "1970-01-01",
 ) -> Response[APIResultSearchResult]:
     """harvest dataset by dataset's publish time period(start_time and end_time)
 
      result is order by publish time desc
 
     Args:
-        end_time (Union[Unset, str]):  Default: '2099-01-01'.
-        page (Union[Unset, int]):  Default: 1.
-        size (Union[Unset, int]):  Default: 10.
-        start_time (Union[Unset, str]):  Default: '1970-01-01'.
+        end_time (Unset | str):  Default: '2099-01-01'.
+        page (Unset | int):  Default: 1.
+        size (Unset | int):  Default: 10.
+        start_time (Unset | str):  Default: '1970-01-01'.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -176,21 +176,21 @@ async def asyncio_detailed(
 
 async def asyncio(
     *,
-    client: Union[AuthenticatedClient, Client],
-    end_time: Union[Unset, str] = "2099-01-01",
-    page: Union[Unset, int] = 1,
-    size: Union[Unset, int] = 10,
-    start_time: Union[Unset, str] = "1970-01-01",
-) -> Optional[APIResultSearchResult]:
+    client: AuthenticatedClient | Client,
+    end_time: Unset | str = "2099-01-01",
+    page: Unset | int = 1,
+    size: Unset | int = 10,
+    start_time: Unset | str = "1970-01-01",
+) -> APIResultSearchResult | None:
     """harvest dataset by dataset's publish time period(start_time and end_time)
 
      result is order by publish time desc
 
     Args:
-        end_time (Union[Unset, str]):  Default: '2099-01-01'.
-        page (Union[Unset, int]):  Default: 1.
-        size (Union[Unset, int]):  Default: 10.
-        start_time (Union[Unset, str]):  Default: '1970-01-01'.
+        end_time (Unset | str):  Default: '2099-01-01'.
+        page (Unset | int):  Default: 1.
+        size (Unset | int):  Default: 10.
+        start_time (Unset | str):  Default: '1970-01-01'.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.

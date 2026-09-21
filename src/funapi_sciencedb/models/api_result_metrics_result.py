@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union
+from typing import TYPE_CHECKING, Any, TypeVar, Union
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -17,30 +17,30 @@ class APIResultMetricsResult:
     """the api result model
 
     Attributes:
-        code (Union[Unset, int]): 20000 means success, other means error
-        message (Union[Unset, str]): code's description in Chinese
-        get_message_en (Union[Unset, str]): code's description in English
+        code (Unset | int): 20000 means success, other means error
+        message (Unset | str): code's description in Chinese
+        get_message_en (Unset | str): code's description in English
         data (Union[Unset, MetricsResult]): wrapper of records of '/harvest' and '/search' and '/metrics' API
     """
 
-    code: Union[Unset, int] = UNSET
-    message: Union[Unset, str] = UNSET
-    get_message_en: Union[Unset, str] = UNSET
+    code: Unset | int = UNSET
+    message: Unset | str = UNSET
+    get_message_en: Unset | str = UNSET
     data: Union[Unset, "MetricsResult"] = UNSET
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         code = self.code
 
         message = self.message
 
         get_message_en = self.get_message_en
 
-        data: Union[Unset, Dict[str, Any]] = UNSET
+        data: Unset | dict[str, Any] = UNSET
         if not isinstance(self.data, Unset):
             data = self.data.to_dict()
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if code is not UNSET:
@@ -55,7 +55,7 @@ class APIResultMetricsResult:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls, src_dict: dict[str, Any]) -> T:
         from ..models.metrics_result import MetricsResult
 
         d = src_dict.copy()
@@ -66,7 +66,7 @@ class APIResultMetricsResult:
         get_message_en = d.pop("getMessageEn", UNSET)
 
         _data = d.pop("data", UNSET)
-        data: Union[Unset, MetricsResult]
+        data: Unset | MetricsResult
         if isinstance(_data, Unset):
             data = UNSET
         else:
@@ -83,7 +83,7 @@ class APIResultMetricsResult:
         return api_result_metrics_result
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

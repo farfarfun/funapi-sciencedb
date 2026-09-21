@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from typing import Any, Dict, Optional, Union
+from typing import Any
 
 import httpx
 
@@ -11,10 +11,10 @@ from ...types import UNSET, Response, Unset
 
 def _get_kwargs(
     *,
-    pagenumber: Union[Unset, int] = 1,
-    pagesize: Union[Unset, int] = 10,
-) -> Dict[str, Any]:
-    params: Dict[str, Any] = {}
+    pagenumber: Unset | int = 1,
+    pagesize: Unset | int = 10,
+) -> dict[str, Any]:
+    params: dict[str, Any] = {}
 
     params["page[number]"] = pagenumber
 
@@ -22,7 +22,7 @@ def _get_kwargs(
 
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
-    _kwargs: Dict[str, Any] = {
+    _kwargs: dict[str, Any] = {
         "method": "get",
         "url": "/reports",
         "params": params,
@@ -32,8 +32,8 @@ def _get_kwargs(
 
 
 def _parse_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[SUSHIReportPage]:
+    *, client: AuthenticatedClient | Client, response: httpx.Response
+) -> SUSHIReportPage | None:
     if response.status_code == 200:
         response_200 = SUSHIReportPage.from_dict(response.json())
 
@@ -45,7 +45,7 @@ def _parse_response(
 
 
 def _build_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
+    *, client: AuthenticatedClient | Client, response: httpx.Response
 ) -> Response[SUSHIReportPage]:
     return Response(
         status_code=HTTPStatus(response.status_code),
@@ -57,17 +57,17 @@ def _build_response(
 
 def sync_detailed(
     *,
-    client: Union[AuthenticatedClient, Client],
-    pagenumber: Union[Unset, int] = 1,
-    pagesize: Union[Unset, int] = 10,
+    client: AuthenticatedClient | Client,
+    pagenumber: Unset | int = 1,
+    pagesize: Unset | int = 10,
 ) -> Response[SUSHIReportPage]:
     """getReports
 
      This resource returns a list of reports supported by the API for a given application.
 
     Args:
-        pagenumber (Union[Unset, int]):  Default: 1.
-        pagesize (Union[Unset, int]):  Default: 10.
+        pagenumber (Unset | int):  Default: 1.
+        pagesize (Unset | int):  Default: 10.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -91,17 +91,17 @@ def sync_detailed(
 
 def sync(
     *,
-    client: Union[AuthenticatedClient, Client],
-    pagenumber: Union[Unset, int] = 1,
-    pagesize: Union[Unset, int] = 10,
-) -> Optional[SUSHIReportPage]:
+    client: AuthenticatedClient | Client,
+    pagenumber: Unset | int = 1,
+    pagesize: Unset | int = 10,
+) -> SUSHIReportPage | None:
     """getReports
 
      This resource returns a list of reports supported by the API for a given application.
 
     Args:
-        pagenumber (Union[Unset, int]):  Default: 1.
-        pagesize (Union[Unset, int]):  Default: 10.
+        pagenumber (Unset | int):  Default: 1.
+        pagesize (Unset | int):  Default: 10.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -120,17 +120,17 @@ def sync(
 
 async def asyncio_detailed(
     *,
-    client: Union[AuthenticatedClient, Client],
-    pagenumber: Union[Unset, int] = 1,
-    pagesize: Union[Unset, int] = 10,
+    client: AuthenticatedClient | Client,
+    pagenumber: Unset | int = 1,
+    pagesize: Unset | int = 10,
 ) -> Response[SUSHIReportPage]:
     """getReports
 
      This resource returns a list of reports supported by the API for a given application.
 
     Args:
-        pagenumber (Union[Unset, int]):  Default: 1.
-        pagesize (Union[Unset, int]):  Default: 10.
+        pagenumber (Unset | int):  Default: 1.
+        pagesize (Unset | int):  Default: 10.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -152,17 +152,17 @@ async def asyncio_detailed(
 
 async def asyncio(
     *,
-    client: Union[AuthenticatedClient, Client],
-    pagenumber: Union[Unset, int] = 1,
-    pagesize: Union[Unset, int] = 10,
-) -> Optional[SUSHIReportPage]:
+    client: AuthenticatedClient | Client,
+    pagenumber: Unset | int = 1,
+    pagesize: Unset | int = 10,
+) -> SUSHIReportPage | None:
     """getReports
 
      This resource returns a list of reports supported by the API for a given application.
 
     Args:
-        pagenumber (Union[Unset, int]):  Default: 1.
-        pagesize (Union[Unset, int]):  Default: 10.
+        pagenumber (Unset | int):  Default: 1.
+        pagesize (Unset | int):  Default: 10.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.

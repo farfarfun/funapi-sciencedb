@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union
+from typing import TYPE_CHECKING, Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -17,27 +17,27 @@ class SUSHIServiceStatus:
     """
     Attributes:
         service_active (bool): Indicator if the service is currently able to deliver reports. Example: True.
-        alerts (Union[Unset, List['SUSHIServiceStatusAlertsItem']]): Any alerts related to service interuptions and
+        alerts (Union[Unset, list['SUSHIServiceStatusAlertsItem']]): Any alerts related to service interuptions and
             status.
-        description (Union[Unset, str]): Description of the service. Example: COUNTER Research Data Usage Reports for
+        description (Unset | str): Description of the service. Example: COUNTER Research Data Usage Reports for
             the UK Data Service - ReShare..
-        note (Union[Unset, str]): A general note about the service. Example: A given customer can request a maximum of 5
+        note (Unset | str): A general note about the service. Example: A given customer can request a maximum of 5
             requests per day for a given report.
-        registry_url (Union[Unset, str]): If available, the URL separate registry with additional information about the
+        registry_url (Unset | str): If available, the URL separate registry with additional information about the
             service. Example: https://www.projectcounter.org/counter-user/ebsco-database/.
     """
 
     service_active: bool
-    alerts: Union[Unset, List["SUSHIServiceStatusAlertsItem"]] = UNSET
-    description: Union[Unset, str] = UNSET
-    note: Union[Unset, str] = UNSET
-    registry_url: Union[Unset, str] = UNSET
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    alerts: Unset | list["SUSHIServiceStatusAlertsItem"] = UNSET
+    description: Unset | str = UNSET
+    note: Unset | str = UNSET
+    registry_url: Unset | str = UNSET
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         service_active = self.service_active
 
-        alerts: Union[Unset, List[Dict[str, Any]]] = UNSET
+        alerts: Unset | list[dict[str, Any]] = UNSET
         if not isinstance(self.alerts, Unset):
             alerts = []
             for alerts_item_data in self.alerts:
@@ -50,7 +50,7 @@ class SUSHIServiceStatus:
 
         registry_url = self.registry_url
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -69,7 +69,7 @@ class SUSHIServiceStatus:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls, src_dict: dict[str, Any]) -> T:
         from ..models.sushi_service_status_alerts_item import (
             SUSHIServiceStatusAlertsItem,
         )
@@ -102,7 +102,7 @@ class SUSHIServiceStatus:
         return sushi_service_status
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

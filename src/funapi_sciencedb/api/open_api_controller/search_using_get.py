@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from typing import Any, Dict, Optional, Union
+from typing import Any
 
 import httpx
 
@@ -11,11 +11,11 @@ from ...types import UNSET, Response, Unset
 
 def _get_kwargs(
     *,
-    page: Union[Unset, int] = 1,
-    range_: Union[Unset, int] = UNSET,
-    size: Union[Unset, int] = 10,
-) -> Dict[str, Any]:
-    params: Dict[str, Any] = {}
+    page: Unset | int = 1,
+    range_: Unset | int = UNSET,
+    size: Unset | int = 10,
+) -> dict[str, Any]:
+    params: dict[str, Any] = {}
 
     params["page"] = page
 
@@ -25,7 +25,7 @@ def _get_kwargs(
 
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
-    _kwargs: Dict[str, Any] = {
+    _kwargs: dict[str, Any] = {
         "method": "get",
         "url": "/search",
         "params": params,
@@ -35,8 +35,8 @@ def _get_kwargs(
 
 
 def _parse_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[APIResultSearchResult]:
+    *, client: AuthenticatedClient | Client, response: httpx.Response
+) -> APIResultSearchResult | None:
     if response.status_code == 200:
         response_200 = APIResultSearchResult.from_dict(response.json())
 
@@ -48,7 +48,7 @@ def _parse_response(
 
 
 def _build_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
+    *, client: AuthenticatedClient | Client, response: httpx.Response
 ) -> Response[APIResultSearchResult]:
     return Response(
         status_code=HTTPStatus(response.status_code),
@@ -60,19 +60,19 @@ def _build_response(
 
 def sync_detailed(
     *,
-    client: Union[AuthenticatedClient, Client],
-    page: Union[Unset, int] = 1,
-    range_: Union[Unset, int] = UNSET,
-    size: Union[Unset, int] = 10,
+    client: AuthenticatedClient | Client,
+    page: Unset | int = 1,
+    range_: Unset | int = UNSET,
+    size: Unset | int = 10,
 ) -> Response[APIResultSearchResult]:
     """search dataset by page
 
      result is order by publish time desc
 
     Args:
-        page (Union[Unset, int]):  Default: 1.
-        range_ (Union[Unset, int]):
-        size (Union[Unset, int]):  Default: 10.
+        page (Unset | int):  Default: 1.
+        range_ (Unset | int):
+        size (Unset | int):  Default: 10.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -97,19 +97,19 @@ def sync_detailed(
 
 def sync(
     *,
-    client: Union[AuthenticatedClient, Client],
-    page: Union[Unset, int] = 1,
-    range_: Union[Unset, int] = UNSET,
-    size: Union[Unset, int] = 10,
-) -> Optional[APIResultSearchResult]:
+    client: AuthenticatedClient | Client,
+    page: Unset | int = 1,
+    range_: Unset | int = UNSET,
+    size: Unset | int = 10,
+) -> APIResultSearchResult | None:
     """search dataset by page
 
      result is order by publish time desc
 
     Args:
-        page (Union[Unset, int]):  Default: 1.
-        range_ (Union[Unset, int]):
-        size (Union[Unset, int]):  Default: 10.
+        page (Unset | int):  Default: 1.
+        range_ (Unset | int):
+        size (Unset | int):  Default: 10.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -129,19 +129,19 @@ def sync(
 
 async def asyncio_detailed(
     *,
-    client: Union[AuthenticatedClient, Client],
-    page: Union[Unset, int] = 1,
-    range_: Union[Unset, int] = UNSET,
-    size: Union[Unset, int] = 10,
+    client: AuthenticatedClient | Client,
+    page: Unset | int = 1,
+    range_: Unset | int = UNSET,
+    size: Unset | int = 10,
 ) -> Response[APIResultSearchResult]:
     """search dataset by page
 
      result is order by publish time desc
 
     Args:
-        page (Union[Unset, int]):  Default: 1.
-        range_ (Union[Unset, int]):
-        size (Union[Unset, int]):  Default: 10.
+        page (Unset | int):  Default: 1.
+        range_ (Unset | int):
+        size (Unset | int):  Default: 10.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -164,19 +164,19 @@ async def asyncio_detailed(
 
 async def asyncio(
     *,
-    client: Union[AuthenticatedClient, Client],
-    page: Union[Unset, int] = 1,
-    range_: Union[Unset, int] = UNSET,
-    size: Union[Unset, int] = 10,
-) -> Optional[APIResultSearchResult]:
+    client: AuthenticatedClient | Client,
+    page: Unset | int = 1,
+    range_: Unset | int = UNSET,
+    size: Unset | int = 10,
+) -> APIResultSearchResult | None:
     """search dataset by page
 
      result is order by publish time desc
 
     Args:
-        page (Union[Unset, int]):  Default: 1.
-        range_ (Union[Unset, int]):
-        size (Union[Unset, int]):  Default: 10.
+        page (Unset | int):  Default: 1.
+        range_ (Unset | int):
+        size (Unset | int):  Default: 10.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.

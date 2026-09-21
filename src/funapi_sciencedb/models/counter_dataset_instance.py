@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -21,27 +21,27 @@ class COUNTERDatasetInstance:
         access_method (Union[Unset, COUNTERDatasetInstanceAccessMethod]): Identifies if the usage activity was 'Regular'
             usage - a user doing research on a content site, or if the usage activity was 'Machine' - for the purpose of
             retrieving content for Text and Data Mining (TDM) Example: regular.
-        count (Union[Unset, int]):
+        count (Unset | int):
         metric_type (Union[Unset, COUNTERDatasetInstanceMetricType]):
     """
 
-    access_method: Union[Unset, COUNTERDatasetInstanceAccessMethod] = UNSET
-    count: Union[Unset, int] = UNSET
-    metric_type: Union[Unset, COUNTERDatasetInstanceMetricType] = UNSET
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    access_method: Unset | COUNTERDatasetInstanceAccessMethod = UNSET
+    count: Unset | int = UNSET
+    metric_type: Unset | COUNTERDatasetInstanceMetricType = UNSET
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
-        access_method: Union[Unset, str] = UNSET
+    def to_dict(self) -> dict[str, Any]:
+        access_method: Unset | str = UNSET
         if not isinstance(self.access_method, Unset):
             access_method = self.access_method.value
 
         count = self.count
 
-        metric_type: Union[Unset, str] = UNSET
+        metric_type: Unset | str = UNSET
         if not isinstance(self.metric_type, Unset):
             metric_type = self.metric_type.value
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if access_method is not UNSET:
@@ -54,10 +54,10 @@ class COUNTERDatasetInstance:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls, src_dict: dict[str, Any]) -> T:
         d = src_dict.copy()
         _access_method = d.pop("access-method", UNSET)
-        access_method: Union[Unset, COUNTERDatasetInstanceAccessMethod]
+        access_method: Unset | COUNTERDatasetInstanceAccessMethod
         if isinstance(_access_method, Unset):
             access_method = UNSET
         else:
@@ -66,7 +66,7 @@ class COUNTERDatasetInstance:
         count = d.pop("count", UNSET)
 
         _metric_type = d.pop("metric-type", UNSET)
-        metric_type: Union[Unset, COUNTERDatasetInstanceMetricType]
+        metric_type: Unset | COUNTERDatasetInstanceMetricType
         if isinstance(_metric_type, Unset):
             metric_type = UNSET
         else:
@@ -82,7 +82,7 @@ class COUNTERDatasetInstance:
         return counter_dataset_instance
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

@@ -59,8 +59,6 @@ __all__ = (
     "COUNTERPublisherIdentifiers",
     "COUNTERPublisherIdentifiersType",
     "MetricsResult",
-    "SearchRecord",
-    "SearchResult",
     "SUSHIErrorModel",
     "SUSHIErrorModelSeverity",
     "SUSHIPageMeta",
@@ -72,4 +70,6 @@ __all__ = (
     "SUSHIReportPage",
     "SUSHIServiceStatus",
     "SUSHIServiceStatusAlertsItem",
+    "SearchRecord",
+    "SearchResult",
 )

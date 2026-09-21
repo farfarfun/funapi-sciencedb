@@ -23,10 +23,5 @@ dev = [ "pytest>=9.0.3",]
 generate = [ "requests>=2.31.0", "funapi>=1.0.2", "openapi-python-client>=0.21.0",]
 
 [tool.ruff]
-# src/funapi_sciencedb/{client.py,types.py,errors.py,api/**,models/**,__init__.py}
-# 是 generate.py 通过 openapi-python-client 全量生成的代码，用的是该工具自带模板
-# （英文 docstring、typing.Optional/Dict/Union 旧式写法），手工改写没有意义——下次
-# `uv run python generate.py` 会整体覆盖。openapi-python-client 当前不支持自定义
-# 类型标注风格/docstring 语言的模板配置项，这是已知的生成器限制，此处显式排除，
-# 只对仓库里手写的代码做 ruff 检查。
-extend-exclude = ["src/funapi_sciencedb"]
+target-version = "py310"
+lint.ignore = ["PYI034"]

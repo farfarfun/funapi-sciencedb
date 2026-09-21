@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union
+from typing import TYPE_CHECKING, Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -17,21 +17,21 @@ class SearchResult:
     """wrapper of records of '/harvest' and '/search' API
 
     Attributes:
-        page_no (Union[Unset, int]):
-        page_size (Union[Unset, int]):
-        total_pages (Union[Unset, int]): total pages of records
-        total_elements (Union[Unset, int]): total number of records
-        recommend_data (Union[Unset, List['SearchRecord']]): the list of current page records
+        page_no (Unset | int):
+        page_size (Unset | int):
+        total_pages (Unset | int): total pages of records
+        total_elements (Unset | int): total number of records
+        recommend_data (Union[Unset, list['SearchRecord']]): the list of current page records
     """
 
-    page_no: Union[Unset, int] = UNSET
-    page_size: Union[Unset, int] = UNSET
-    total_pages: Union[Unset, int] = UNSET
-    total_elements: Union[Unset, int] = UNSET
-    recommend_data: Union[Unset, List["SearchRecord"]] = UNSET
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    page_no: Unset | int = UNSET
+    page_size: Unset | int = UNSET
+    total_pages: Unset | int = UNSET
+    total_elements: Unset | int = UNSET
+    recommend_data: Unset | list["SearchRecord"] = UNSET
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         page_no = self.page_no
 
         page_size = self.page_size
@@ -40,14 +40,14 @@ class SearchResult:
 
         total_elements = self.total_elements
 
-        recommend_data: Union[Unset, List[Dict[str, Any]]] = UNSET
+        recommend_data: Unset | list[dict[str, Any]] = UNSET
         if not isinstance(self.recommend_data, Unset):
             recommend_data = []
             for recommend_data_item_data in self.recommend_data:
                 recommend_data_item = recommend_data_item_data.to_dict()
                 recommend_data.append(recommend_data_item)
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if page_no is not UNSET:
@@ -64,7 +64,7 @@ class SearchResult:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls, src_dict: dict[str, Any]) -> T:
         from ..models.search_record import SearchRecord
 
         d = src_dict.copy()
@@ -95,7 +95,7 @@ class SearchResult:
         return search_result
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:
