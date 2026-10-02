@@ -27,6 +27,9 @@
 - `openapi-ori.json` / `openapi-v3.json` 里的接口与模型说明同步改为中文，并补上文件
   末尾换行。
 - README 的「重新生成客户端」补充中文化步骤与 `localize.py --check` 用法。
+- `uv.lock` 中的传递依赖 urllib3 由 2.7.0 升到 2.8.0，修掉 GitHub dependabot 报出的
+  3 个漏洞（2 个 HIGH：`HTTPResponse.stream()/read_chunked()` 无界缓冲、HTTPS 代理的
+  TLS 配置可能被忽略；1 个 MEDIUM：chunked deflate 可进入无限循环）。本包代码未改动。
 
 ### 废弃
 
