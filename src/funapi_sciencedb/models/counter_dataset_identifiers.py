@@ -11,9 +11,9 @@ T = TypeVar("T", bound="COUNTERDatasetIdentifiers")
 @_attrs_define
 class COUNTERDatasetIdentifiers:
     """
-    Attributes:
-        type (COUNTERDatasetIdentifiersType):  Example: doi.
-        value (str): Value of the dataset identifier Example: 0931-865.
+    属性：
+        type (COUNTERDatasetIdentifiersType):  示例为 doi.
+        value (str): 数据集标识的值 示例为 0931-865.
     """
 
     type: COUNTERDatasetIdentifiersType

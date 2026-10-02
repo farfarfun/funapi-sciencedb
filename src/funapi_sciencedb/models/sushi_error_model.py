@@ -11,15 +11,15 @@ T = TypeVar("T", bound="SUSHIErrorModel")
 
 @_attrs_define
 class SUSHIErrorModel:
-    """Generalized format for presenting errors and exceptions.
+    """错误与异常的通用表示结构。
 
-    Attributes:
-        code (int): Error number. See table of error. Example: 3040.
-        message (str): Text describing the error. Example: Partial Data Returned..
-        severity (SUSHIErrorModelSeverity): Severity of the error. Example: Warning.
-        data (Unset | str): Additional data provided by the server to clarify the error. Example: Usage data has
+    属性：
+        code (int): 错误码，含义见错误码表。 示例为 3040.
+        message (str): 错误的文字描述。 示例为 Partial Data Returned..
+        severity (SUSHIErrorModelSeverity): 错误的严重级别。 示例为 Warning.
+        data (Unset | str): 服务端提供的补充信息，用于进一步说明该错误。 示例为 Usage data has
             not been processed for all requested months..
-        help_url (Unset | str): URL describing error details.
+        help_url (Unset | str): 描述错误详情的 URL。
     """
 
     code: int

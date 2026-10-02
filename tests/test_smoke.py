@@ -1,15 +1,14 @@
-"""Smoke tests for funapi-sciencedb (import name: funapi_sciencedb).
+"""funapi-sciencedb（导入名 funapi_sciencedb）的冒烟测试。
 
-funapi-sciencedb is an auto-generated OpenAPI client (via openapi-python-client)
-for the ScienceDB (scidb.cn) Open API. These tests only check that the client
-constructs correctly and that its generated request functions behave as
-expected when the underlying HTTP layer is mocked. No real network calls are
-made against scidb.cn.
+本包是用 openapi-python-client 按 ScienceDB（scidb.cn）开放接口文档自动生成的客户端。
+这些测试只验证客户端能正确构造，以及在 mock 掉底层 HTTP 之后生成的请求函数行为符合预期，
+不会真的去访问 scidb.cn。
 """
 
 import asyncio
 import runpy
 import sys
+from pathlib import Path
 from types import ModuleType, SimpleNamespace
 from unittest.mock import MagicMock
 
@@ -33,8 +32,11 @@ from funapi_sciencedb.models.api_result_search_result import APIResultSearchResu
 from funapi_sciencedb.models.sushi_report import SUSHIReport
 from funapi_sciencedb.models.sushi_report_page import SUSHIReportPage
 
+ROOT = Path(__file__).resolve().parent.parent
+
 
 def test_import_generate_has_no_side_effects(monkeypatch):
+    """导入 generate 模块不应该触发网络请求或重新生成代码。"""
     calls = []
 
     requests = ModuleType("requests")
@@ -52,13 +54,13 @@ def test_import_generate_has_no_side_effects(monkeypatch):
     monkeypatch.setitem(sys.modules, "funapi.generate", generate)
     monkeypatch.setitem(sys.modules, "openapi_python_client", client)
 
-    runpy.run_path("generate.py", run_name="generate")
+    runpy.run_path(str(ROOT / "generate.py"), run_name="generate")
 
     assert calls == []
 
 
 def test_import_top_level_package():
-    """Importing the top-level package and its main symbols should succeed."""
+    """导入顶层包及其主要符号应当成功。"""
     import funapi_sciencedb
 
     assert hasattr(funapi_sciencedb, "Client")
@@ -66,16 +68,16 @@ def test_import_top_level_package():
 
 
 def test_client_construction():
-    """Client can be constructed with a trivial base_url, no network call happens."""
+    """只给一个 base_url 就能构造出 Client，过程中不发起网络请求。"""
     client = Client(base_url="https://example.invalid/open-api/v2")
 
     assert client is not None
-    # Underlying httpx.Client is lazily constructed, not eagerly.
+    # 底层 httpx.Client 是惰性构造的，不会在这里就建好。
     assert client._client is None
 
 
 def test_authenticated_client_construction():
-    """AuthenticatedClient can be constructed with a fake token."""
+    """用假 token 就能构造出 AuthenticatedClient。"""
     client = AuthenticatedClient(
         base_url="https://example.invalid/open-api/v2",
         token="fake-token",
@@ -87,19 +89,18 @@ def test_authenticated_client_construction():
 
 
 def test_get_httpx_client_builds_without_network_call():
-    """Building the underlying httpx.Client should not perform any I/O."""
+    """构造底层 httpx.Client 不应该产生任何 I/O。"""
     client = Client(base_url="https://example.invalid/open-api/v2")
 
     httpx_client = client.get_httpx_client()
 
     assert isinstance(httpx_client, httpx.Client)
-    # Calling again should return the same cached instance.
+    # 再调用一次应当拿到同一个缓存实例。
     assert client.get_httpx_client() is httpx_client
 
 
 def test_search_using_get_sync_with_mocked_http(monkeypatch):
-    """search_using_get.sync() should parse a mocked HTTP response without
-    ever touching the real scidb.cn API."""
+    """search_using_get.sync() 能解析 mock 出来的 HTTP 响应，且完全不碰真实接口。"""
     client = Client(base_url="https://example.invalid/open-api/v2")
 
     fake_response = httpx.Response(
@@ -124,7 +125,7 @@ def test_search_using_get_sync_with_mocked_http(monkeypatch):
 
 
 def test_search_using_get_sync_detailed_returns_response_wrapper(monkeypatch):
-    """sync_detailed() should return the full Response wrapper (status, headers, parsed)."""
+    """sync_detailed() 返回完整的 Response 包装对象（状态码、响应头、解析结果）。"""
     client = Client(base_url="https://example.invalid/open-api/v2")
 
     fake_response = httpx.Response(
@@ -143,7 +144,7 @@ def test_search_using_get_sync_detailed_returns_response_wrapper(monkeypatch):
 
 
 def test_harvest_using_get_builds_expected_request_kwargs(monkeypatch):
-    """A second representative *Api module (harvest) also avoids real network calls."""
+    """再挑一个代表性接口模块（harvest）验证同样不会发起真实网络请求。"""
     client = Client(base_url="https://example.invalid/open-api/v2")
 
     fake_response = httpx.Response(
@@ -161,7 +162,7 @@ def test_harvest_using_get_builds_expected_request_kwargs(monkeypatch):
 
 
 def test_get_api_status_parses_list_response(monkeypatch):
-    """sushi_controller.get_api_status parses a JSON list response into models."""
+    """sushi_controller.get_api_status 能把 JSON 数组响应解析成模型列表。"""
     client = AuthenticatedClient(
         base_url="https://example.invalid/open-api/v2", token="fake-token"
     )
@@ -184,7 +185,7 @@ def test_get_api_status_parses_list_response(monkeypatch):
 
 
 def test_search_using_get_unexpected_status_returns_none_by_default(monkeypatch):
-    """Non-200 responses are returned as None unless raise_on_unexpected_status is set."""
+    """没开 raise_on_unexpected_status 时，非 200 响应统一返回 None。"""
     client = Client(base_url="https://example.invalid/open-api/v2")
 
     fake_response = httpx.Response(
@@ -202,7 +203,7 @@ def test_search_using_get_unexpected_status_returns_none_by_default(monkeypatch)
 
 
 def test_metrics_using_get_sync_with_mocked_http(monkeypatch):
-    """open_api_controller.metrics_using_get.sync() parses a mocked response."""
+    """open_api_controller.metrics_using_get.sync() 能解析 mock 响应。"""
     client = Client(base_url="https://example.invalid/open-api/v2")
 
     fake_response = httpx.Response(
@@ -222,7 +223,7 @@ def test_metrics_using_get_sync_with_mocked_http(monkeypatch):
 
 
 def test_json_using_get_sync_returns_raw_string(monkeypatch):
-    """open_api_controller.json_using_get.sync() returns the raw JSON-as-string body."""
+    """open_api_controller.json_using_get.sync() 原样返回字符串形式的 JSON 响应体。"""
     client = Client(base_url="https://example.invalid/open-api/v2")
 
     fake_response = httpx.Response(
@@ -240,7 +241,7 @@ def test_json_using_get_sync_returns_raw_string(monkeypatch):
 
 
 def test_json_using_get_unexpected_status_returns_none_by_default(monkeypatch):
-    """Non-200 responses fall back to None unless raise_on_unexpected_status is set."""
+    """没开 raise_on_unexpected_status 时，非 200 响应退化为 None。"""
     client = Client(base_url="https://example.invalid/open-api/v2")
 
     fake_response = httpx.Response(
@@ -258,7 +259,7 @@ def test_json_using_get_unexpected_status_returns_none_by_default(monkeypatch):
 
 
 def test_get_reports_sync_with_default_pagination(monkeypatch):
-    """sushi_controller.get_reports.sync() uses page[number]=1 / page[size]=10 by default."""
+    """sushi_controller.get_reports.sync() 默认用 page[number]=1 / page[size]=10 分页。"""
     client = AuthenticatedClient(
         base_url="https://example.invalid/open-api/v2", token="fake-token"
     )
@@ -279,7 +280,7 @@ def test_get_reports_sync_with_default_pagination(monkeypatch):
 
 
 def test_get_report_by_id_using_get_sync_with_mocked_http(monkeypatch):
-    """sushi_controller.get_report_by_id_using_get.sync() builds the path with the report id."""
+    """sushi_controller.get_report_by_id_using_get.sync() 会把报告 id 拼进请求路径。"""
     client = AuthenticatedClient(
         base_url="https://example.invalid/open-api/v2", token="fake-token"
     )
@@ -299,7 +300,7 @@ def test_get_report_by_id_using_get_sync_with_mocked_http(monkeypatch):
 
 
 def test_get_report_by_id_using_get_empty_id_returns_none(monkeypatch):
-    """Non-200 responses (e.g. unknown report id) fall back to None."""
+    """非 200 响应（比如报告 id 不存在）退化为 None。"""
     client = AuthenticatedClient(
         base_url="https://example.invalid/open-api/v2", token="fake-token"
     )
@@ -321,10 +322,10 @@ def test_get_report_by_id_using_get_empty_id_returns_none(monkeypatch):
 
 
 def test_search_using_get_asyncio_with_mocked_http(monkeypatch):
-    """search_using_get.asyncio() (the async counterpart of sync()) also avoids real network calls.
+    """search_using_get.asyncio()（sync() 的异步版本）同样不会发起真实网络请求。
 
-    No pytest-asyncio plugin is declared as a dependency, so the coroutine is
-    driven directly with ``asyncio.run`` instead of an ``async def`` test.
+    仓库没有引入 pytest-asyncio 依赖，所以这里不写 ``async def`` 测试，
+    直接用 ``asyncio.run`` 驱动协程。
     """
     client = Client(base_url="https://example.invalid/open-api/v2")
 
@@ -346,7 +347,7 @@ def test_search_using_get_asyncio_with_mocked_http(monkeypatch):
 
 
 def test_get_api_status_asyncio_detailed_returns_response_wrapper(monkeypatch):
-    """get_api_status.asyncio_detailed() returns the full Response wrapper for the async path."""
+    """异步路径下，get_api_status.asyncio_detailed() 同样返回完整的 Response 包装对象。"""
     client = AuthenticatedClient(
         base_url="https://example.invalid/open-api/v2", token="fake-token"
     )
@@ -369,6 +370,5 @@ def test_get_api_status_asyncio_detailed_returns_response_wrapper(monkeypatch):
 
 
 def test_real_credentials_not_available():
-    """Hitting the real scidb.cn API requires network access / real credentials
-    that are not available in this test environment."""
+    """访问真实 scidb.cn 接口需要网络和真实凭据，当前测试环境没有。"""
     pytest.skip("需要真实凭据/网络访问 scidb.cn，跳过")

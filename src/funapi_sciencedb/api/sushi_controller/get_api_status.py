@@ -62,18 +62,18 @@ def sync_detailed(
     client: AuthenticatedClient | Client,
     platform: Unset | str = UNSET,
 ) -> Response[list["SUSHIServiceStatus"]]:
-    """getAPIStatus
+    """获取 API 服务状态
 
-     This resource returns the current status of the reporting service supported by this API.
+     返回该 API 所支持的报告服务的当前状态。
 
-    Args:
+    参数：
         platform (Unset | str):
 
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
+    抛出：
+        errors.UnexpectedStatus：服务端返回了文档里没有声明的状态码，且 Client.raise_on_unexpected_status 为 True。
+        httpx.TimeoutException：请求耗时超过 Client.timeout。
 
-    Returns:
+    返回：
         Response[list['SUSHIServiceStatus']]
     """
 
@@ -93,18 +93,18 @@ def sync(
     client: AuthenticatedClient | Client,
     platform: Unset | str = UNSET,
 ) -> list["SUSHIServiceStatus"] | None:
-    """getAPIStatus
+    """获取 API 服务状态
 
-     This resource returns the current status of the reporting service supported by this API.
+     返回该 API 所支持的报告服务的当前状态。
 
-    Args:
+    参数：
         platform (Unset | str):
 
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
+    抛出：
+        errors.UnexpectedStatus：服务端返回了文档里没有声明的状态码，且 Client.raise_on_unexpected_status 为 True。
+        httpx.TimeoutException：请求耗时超过 Client.timeout。
 
-    Returns:
+    返回：
         list['SUSHIServiceStatus']
     """
 
@@ -119,18 +119,18 @@ async def asyncio_detailed(
     client: AuthenticatedClient | Client,
     platform: Unset | str = UNSET,
 ) -> Response[list["SUSHIServiceStatus"]]:
-    """getAPIStatus
+    """获取 API 服务状态
 
-     This resource returns the current status of the reporting service supported by this API.
+     返回该 API 所支持的报告服务的当前状态。
 
-    Args:
+    参数：
         platform (Unset | str):
 
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
+    抛出：
+        errors.UnexpectedStatus：服务端返回了文档里没有声明的状态码，且 Client.raise_on_unexpected_status 为 True。
+        httpx.TimeoutException：请求耗时超过 Client.timeout。
 
-    Returns:
+    返回：
         Response[list['SUSHIServiceStatus']]
     """
 
@@ -148,18 +148,18 @@ async def asyncio(
     client: AuthenticatedClient | Client,
     platform: Unset | str = UNSET,
 ) -> list["SUSHIServiceStatus"] | None:
-    """getAPIStatus
+    """获取 API 服务状态
 
-     This resource returns the current status of the reporting service supported by this API.
+     返回该 API 所支持的报告服务的当前状态。
 
-    Args:
+    参数：
         platform (Unset | str):
 
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
+    抛出：
+        errors.UnexpectedStatus：服务端返回了文档里没有声明的状态码，且 Client.raise_on_unexpected_status 为 True。
+        httpx.TimeoutException：请求耗时超过 Client.timeout。
 
-    Returns:
+    返回：
         list['SUSHIServiceStatus']
     """
 

@@ -15,9 +15,8 @@ T = TypeVar("T", bound="SUSHIReport")
 @_attrs_define
 class SUSHIReport:
     """
-    Attributes:
-        report (Union[Unset, COUNTERDatasetReport]): Describes the formatting needs for the COUNTER Dataset Report.
-            Response may include the Report_Header (optional), Report_Datasets (usage stats).
+    属性：
+        report (Union[Unset, COUNTERDatasetReport]): 描述 COUNTER 数据集报告的组织形式。响应可以包含 Report_Header（可选）与 Report_Datasets（使用量统计）。
     """
 
     report: Union[Unset, "COUNTERDatasetReport"] = UNSET

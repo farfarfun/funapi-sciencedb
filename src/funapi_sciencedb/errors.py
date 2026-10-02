@@ -1,8 +1,8 @@
-"""Contains shared errors types that can be raised from API functions"""
+"""API 函数可能抛出的公共异常类型。"""
 
 
 class UnexpectedStatus(Exception):
-    """Raised by api functions when the response status an undocumented status and Client.raise_on_unexpected_status is True"""
+    """当响应状态码没有写在文档里、且 Client.raise_on_unexpected_status 为 True 时，由 API 函数抛出。"""
 
     def __init__(self, status_code: int, content: bytes):
         self.status_code = status_code

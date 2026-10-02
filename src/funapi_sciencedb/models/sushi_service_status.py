@@ -15,16 +15,14 @@ T = TypeVar("T", bound="SUSHIServiceStatus")
 @_attrs_define
 class SUSHIServiceStatus:
     """
-    Attributes:
-        service_active (bool): Indicator if the service is currently able to deliver reports. Example: True.
-        alerts (Union[Unset, list['SUSHIServiceStatusAlertsItem']]): Any alerts related to service interuptions and
-            status.
-        description (Unset | str): Description of the service. Example: COUNTER Research Data Usage Reports for
+    属性：
+        service_active (bool): 标识该服务当前是否可以提供报告。 示例为 True.
+        alerts (Union[Unset, list['SUSHIServiceStatusAlertsItem']]): 与服务中断及状态相关的告警。
+        description (Unset | str): 服务说明。 示例为 COUNTER Research Data Usage Reports for
             the UK Data Service - ReShare..
-        note (Unset | str): A general note about the service. Example: A given customer can request a maximum of 5
+        note (Unset | str): 关于该服务的一般性说明。 示例为 A given customer can request a maximum of 5
             requests per day for a given report.
-        registry_url (Unset | str): If available, the URL separate registry with additional information about the
-            service. Example: https://www.projectcounter.org/counter-user/ebsco-database/.
+        registry_url (Unset | str): 如有，指向包含该服务补充信息的独立注册表 URL。 示例为 https://www.projectcounter.org/counter-user/ebsco-database/.
     """
 
     service_active: bool

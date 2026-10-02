@@ -1,1 +1,1 @@
-"""Contains methods for accessing the API"""
+"""按 OpenAPI 文档生成的接口调用方法。"""

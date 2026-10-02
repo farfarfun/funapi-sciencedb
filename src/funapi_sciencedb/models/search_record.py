@@ -10,21 +10,21 @@ T = TypeVar("T", bound="SearchRecord")
 
 @_attrs_define
 class SearchRecord:
-    """dataset's brief record of '/harvest' and '/search' API
+    """'/harvest' 与 '/search' 接口返回的数据集简要记录
 
-    Attributes:
+    属性：
         clicks (Unset | int):
         language (Unset | str):
         reference_number (Unset | int):
-        title (Unset | str): dataset's title
-        introduction (Unset | str): dataset's introduction
-        keyword (Unset | str): dataset's keywords, put together in quotation marks Example: kw_1;kw_2;kw_3.
-        author (Unset | str): dataset's authors, put together in quotation marks Example: 2021-08-11 18:20:51.
-        publish_date (Unset | str): publish date in ScienceDB Example: author_1;author_2;author_3.
-        taxonomy (Unset | str): taxonomy in ScienceDB,put together in quotation marks,format is 'code'-'taxonomy'
-            Example: 170-Earth science;00-Others.
-        year (Unset | str): publish year in ScienceDB Example: 2021.
-        doi (Unset | str): dataset's doi Example: 10.11922/sciencedb.00101.
+        title (Unset | str): 数据集标题
+        introduction (Unset | str): 数据集简介
+        keyword (Unset | str): 数据集关键词，整体放在引号内 示例为 kw_1;kw_2;kw_3.
+        author (Unset | str): 数据集作者，整体放在引号内 示例为 2021-08-11 18:20:51.
+        publish_date (Unset | str): 在 ScienceDB 的发布日期 示例为 author_1;author_2;author_3.
+        taxonomy (Unset | str): 在 ScienceDB 的学科分类，整体放在引号内，格式为 'code'-'taxonomy'
+            示例为 170-Earth science;00-Others.
+        year (Unset | str): 在 ScienceDB 的发布年份 示例为 2021.
+        doi (Unset | str): 数据集的 DOI 示例为 10.11922/sciencedb.00101.
     """
 
     clicks: Unset | int = UNSET

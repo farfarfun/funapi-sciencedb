@@ -31,6 +31,16 @@ result = search_using_get.sync(client=client, page=1, size=10)
 ```bash
 uv sync --group generate
 uv run python generate.py
+ruff check --fix . && ruff format .
+```
+
+生成器模板和上游 OpenAPI 文档都是英文的，`generate.py` 会自动调用 `localize.py` 把 docstring 换成中文：拉取文档后替换文档里的 `summary` / `description`，生成代码后再替换模板自带的 `Args:`、`Client` 类说明等。
+
+映射表是精确匹配的，上游新增文案不会被瞎翻、而是原样保留。补完映射后可以单独重跑或自查：
+
+```bash
+uv run python localize.py          # 重新应用中文化
+uv run python localize.py --check  # 只检查，列出还没中文化的 docstring
 ```
 
 ---

@@ -20,23 +20,20 @@ T = TypeVar("T", bound="COUNTERDatasetUsage")
 
 @_attrs_define
 class COUNTERDatasetUsage:
-    """Defines the output for the Report_Datasets being returned in a Dataset Report.
+    """定义数据集报告中 Report_Datasets 的输出结构。
 
-    Attributes:
-        data_type (COUNTERDatasetUsageDataType): Nature of the dataset being reported. Example: Dataset.
-        dataset_title (str): Name of the dataset being reported. Example: Lake Erie Fish Community Data.
-        performance (list['COUNTERDatasetPerformance']): The usage data related to the report dataset
-        platform (str): Name of the platform Example: Science Data Bank.
-        publisher (str): Name of publisher of the dataset Example: Science Data Bank.
-        publisher_id (list['COUNTERPublisherIdentifiers']): The identifier for the publisher.
-        dataset_attributes (Union[Unset, list['COUNTERDatasetAttributes']]): Other attributes related related to the
-            dataset.
-        dataset_contributors (Union[Unset, list['COUNTERDatasetContributors']]): The identifier for contributor (i.e.
-            creator) of the dataset.
-        dataset_dates (Union[Unset, list['COUNTERDatasetDates']]): Publication or other date(s)related to the dataset.
-        dataset_id (Union[Unset, list['COUNTERDatasetIdentifiers']]): The identifier for the report dataset
-        yop (Unset | str): Year of publication in the format of 'yyyy'. Use '0001' for unknown and '9999' for
-            articles in press. Example: 2010.
+    属性：
+        data_type (COUNTERDatasetUsageDataType): 所报告数据集的类型。 示例为 Dataset.
+        dataset_title (str): 所报告数据集的名称。 示例为 Lake Erie Fish Community Data.
+        performance (list['COUNTERDatasetPerformance']): 报告中该数据集对应的使用量数据
+        platform (str): 平台名称 示例为 Science Data Bank.
+        publisher (str): 数据集出版方名称 示例为 Science Data Bank.
+        publisher_id (list['COUNTERPublisherIdentifiers']): 出版方的标识。
+        dataset_attributes (Union[Unset, list['COUNTERDatasetAttributes']]): 与该数据集相关的其他属性。
+        dataset_contributors (Union[Unset, list['COUNTERDatasetContributors']]): 数据集贡献者（即创建者）的标识。
+        dataset_dates (Union[Unset, list['COUNTERDatasetDates']]): 与该数据集相关的出版日期或其他日期。
+        dataset_id (Union[Unset, list['COUNTERDatasetIdentifiers']]): 报告中该数据集的标识
+        yop (Unset | str): 出版年份，格式为 'yyyy'。未知填 '0001'，在印填 '9999'。 示例为 2010.
     """
 
     data_type: COUNTERDatasetUsageDataType

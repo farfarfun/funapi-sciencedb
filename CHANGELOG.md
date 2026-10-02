@@ -1,5 +1,37 @@
 # Changelog
 
+## [1.1.2] - 2026-10-02
+
+### 修复
+
+- 生成的客户端代码 docstring 全面中文化（SPEC §7）。此前只有 `client.py` 的两个类
+  docstring 和 `search_using_get.py` 被手工翻过，其余 28 个文件（全部模型、
+  `sushi_controller` 下的接口、`errors.py`、`types.py`、各级 `__init__.py`）以及
+  `client.py` 的方法 docstring 都还是英文，而且手工翻译在下次重新生成时会被覆盖掉。
+- `tests/test_smoke.py` 的模块/用例 docstring 与注释改为中文。
+
+### 新增
+
+- `localize.py`：生成产物中文化脚本，两张精确文案映射表分别处理上游 OpenAPI 文档里的
+  `summary` / `description` 和 `openapi-python-client` 模板写死的英文。`generate.py`
+  已接入——拉取文档后先中文化文档，生成代码后再中文化模板文案，所以重新生成客户端
+  不会再退回英文。映射表只做精确匹配，上游新增文案原样保留，
+  `uv run python localize.py --check` 可以把漏网的 docstring 列出来。
+- `tests/test_localize.py`：覆盖中文化的幂等性、折行长文案的匹配、只改 docstring 不动
+  代码、未登记文案不乱翻，以及「已提交的生成代码里没有残留英文 docstring」这条守卫。
+- 仓库根目录 `conftest.py`：把根目录加进 `sys.path`，让测试能 import 根目录下的
+  `generate` / `localize` 这两个开发期脚本。
+
+### 变更
+
+- `openapi-ori.json` / `openapi-v3.json` 里的接口与模型说明同步改为中文，并补上文件
+  末尾换行。
+- README 的「重新生成客户端」补充中文化步骤与 `localize.py --check` 用法。
+
+### 废弃
+
+- 无。
+
 ## [1.1.1] - 2026-09-03
 
 ### 修复

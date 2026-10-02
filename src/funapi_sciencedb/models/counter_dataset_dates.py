@@ -11,9 +11,9 @@ T = TypeVar("T", bound="COUNTERDatasetDates")
 @_attrs_define
 class COUNTERDatasetDates:
     """
-    Attributes:
-        type (COUNTERDatasetDatesType):  Example: pub-date.
-        value (str): Value of the dataset date Example: 2002-01-15.
+    属性：
+        type (COUNTERDatasetDatesType):  示例为 pub-date.
+        value (str): 数据集日期的值 示例为 2002-01-15.
     """
 
     type: COUNTERDatasetDatesType

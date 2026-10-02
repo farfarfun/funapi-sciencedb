@@ -13,7 +13,7 @@ T = TypeVar("T", bound="COUNTERDatasetPeriod")
 @_attrs_define
 class COUNTERDatasetPeriod:
     """
-    Attributes:
+    属性：
         begin_date (Union[Unset, datetime.datetime]):
         end_date (Union[Unset, datetime.datetime]):
     """

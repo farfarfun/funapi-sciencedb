@@ -17,10 +17,8 @@ T = TypeVar("T", bound="COUNTERDatasetInstance")
 @_attrs_define
 class COUNTERDatasetInstance:
     """
-    Attributes:
-        access_method (Union[Unset, COUNTERDatasetInstanceAccessMethod]): Identifies if the usage activity was 'Regular'
-            usage - a user doing research on a content site, or if the usage activity was 'Machine' - for the purpose of
-            retrieving content for Text and Data Mining (TDM) Example: regular.
+    属性：
+        access_method (Union[Unset, COUNTERDatasetInstanceAccessMethod]): 标识该使用行为是 'Regular'（用户在内容站点上做研究的常规访问），还是 'Machine'（为文本与数据挖掘 TDM 抓取内容） 示例为 regular.
         count (Unset | int):
         metric_type (Union[Unset, COUNTERDatasetInstanceMetricType]):
     """

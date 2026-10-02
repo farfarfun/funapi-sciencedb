@@ -11,10 +11,9 @@ T = TypeVar("T", bound="COUNTERDatasetAttributes")
 @_attrs_define
 class COUNTERDatasetAttributes:
     """
-    Attributes:
-        type (COUNTERDatasetAttributesType): Item attribute types are defined by NISO Journal Article Version and other
-            work... Example: dataset-version.
-        value (str): Value of the item attribute Example: VoR.
+    属性：
+        type (COUNTERDatasetAttributesType): 条目属性类型，依据 NISO Journal Article Version 等规范定义…… 示例为 dataset-version.
+        value (str): 条目属性的值 示例为 VoR.
     """
 
     type: COUNTERDatasetAttributesType

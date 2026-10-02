@@ -14,13 +14,13 @@ T = TypeVar("T", bound="APIResultSearchResult")
 
 @_attrs_define
 class APIResultSearchResult:
-    """the api result model
+    """接口统一返回结构
 
-    Attributes:
-        code (Unset | int): 20000 means success, other means error
-        message (Unset | str): code's description in Chinese
-        get_message_en (Unset | str): code's description in English
-        data (Union[Unset, SearchResult]): wrapper of records of '/harvest' and '/search' API
+    属性：
+        code (Unset | int): 20000 表示成功，其他值表示错误
+        message (Unset | str): code 对应的中文说明
+        get_message_en (Unset | str): code 对应的英文说明
+        data (Union[Unset, SearchResult]): '/harvest' 与 '/search' 接口记录的包装结构
     """
 
     code: Unset | int = UNSET

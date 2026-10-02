@@ -14,12 +14,11 @@ T = TypeVar("T", bound="SUSHIReportList")
 
 @_attrs_define
 class SUSHIReportList:
-    """list wrapper of reports
+    """报告的列表包装结构
 
-    Attributes:
-        id (Unset | str): report id. Example: sciencedb-2022-01.
-        report_header (Union[Unset, SUSHIReportHeader]): Generalized report header that defines the requested report,
-            the requestor, the customer, filters applied, reportAttributes applied and any exceptions.
+    属性：
+        id (Unset | str): 报告 id。 示例为 sciencedb-2022-01.
+        report_header (Union[Unset, SUSHIReportHeader]): 通用报告头，描述所请求的报告、请求方、客户、生效的过滤条件、生效的 reportAttributes 以及出现的异常。
     """
 
     id: Unset | str = UNSET

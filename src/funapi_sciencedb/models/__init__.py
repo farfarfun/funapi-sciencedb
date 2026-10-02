@@ -1,4 +1,4 @@
-"""Contains all the data models used in inputs/outputs"""
+"""接口入参与返回值用到的全部数据模型。"""
 
 from .api_result_metrics_result import APIResultMetricsResult
 from .api_result_search_result import APIResultSearchResult

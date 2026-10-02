@@ -15,14 +15,12 @@ T = TypeVar("T", bound="COUNTERDatasetReport")
 
 @_attrs_define
 class COUNTERDatasetReport:
-    """Describes the formatting needs for the COUNTER Dataset Report. Response may include the Report_Header (optional),
-    Report_Datasets (usage stats).
+    """描述 COUNTER 数据集报告的组织形式。响应可以包含 Report_Header（可选）与 Report_Datasets（使用量统计）。
 
-        Attributes:
-            id (Unset | str): id of report.
-            report_header (Union[Unset, SUSHIReportHeader]): Generalized report header that defines the requested report,
-                the requestor, the customer, filters applied, reportAttributes applied and any exceptions.
-            report_datasets (Union[Unset, list['COUNTERDatasetUsage']]): list of datasets .
+    属性：
+        id (Unset | str): 报告 id。
+        report_header (Union[Unset, SUSHIReportHeader]): 通用报告头，描述所请求的报告、请求方、客户、生效的过滤条件、生效的 reportAttributes 以及出现的异常。
+        report_datasets (Union[Unset, list['COUNTERDatasetUsage']]): 数据集列表。
     """
 
     id: Unset | str = UNSET

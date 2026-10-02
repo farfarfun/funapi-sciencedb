@@ -8,8 +8,11 @@ from funapi.convert import convert_openapi_v3
 from funapi.generate import generate_api
 from openapi_python_client import MetaType
 
+from localize import localize_generated, localize_openapi
+
 OPENAPI_FILEPATH_ORI = "openapi-ori.json"
 OPENAPI_FILEPATH_V3 = "openapi-v3.json"
+OUTPUT_DIR = Path("./src/funapi_sciencedb")
 
 
 def load_openapi_ori() -> None:
@@ -47,12 +50,11 @@ def load_openapi_ori() -> None:
     cookies = {k: v for k, v in cookies.items() if v}
 
     response = requests.get(url, headers=headers, cookies=cookies)
-    openapi = response.json()
-    search = openapi["paths"]["/search"]["get"]
-    search["summary"] = "分页搜索数据集"
-    search["description"] = "结果按发布时间降序排列"
+    # 上游文档是英文的，先按 localize.py 的映射表换成中文再落盘，这样后面生成出来的
+    # docstring 直接就是中文（SPEC §7），不用事后再补。
+    openapi = localize_openapi(response.json())
     with open(OPENAPI_FILEPATH_ORI, "w", encoding="utf-8") as f:
-        f.write(json.dumps(openapi, indent=4, ensure_ascii=False))
+        f.write(json.dumps(openapi, indent=4, ensure_ascii=False) + "\n")
 
 
 def main() -> None:
@@ -61,10 +63,13 @@ def main() -> None:
     convert_openapi_v3()
     generate_api(
         path=Path(OPENAPI_FILEPATH_V3),
-        output_path=Path("./src/funapi_sciencedb"),
+        output_path=OUTPUT_DIR,
         meta=MetaType.NONE,
         overwrite=True,
     )
+    # 生成器模板自带的英文（`Args:`、`Client` 类说明等）不在 OpenAPI 文档里，
+    # 只能生成完再替换一遍。
+    localize_generated(OUTPUT_DIR)
 
 
 if __name__ == "__main__":

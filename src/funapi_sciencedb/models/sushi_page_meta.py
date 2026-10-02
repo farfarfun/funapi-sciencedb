@@ -10,12 +10,12 @@ T = TypeVar("T", bound="SUSHIPageMeta")
 
 @_attrs_define
 class SUSHIPageMeta:
-    """page wrapper of reports
+    """报告的分页包装结构
 
-    Attributes:
-        page (Unset | int): page number. Example: 1.
-        total (Unset | int): count of reports. Example: 100.
-        total_pages (Unset | int): count of pages. Example: 10.
+    属性：
+        page (Unset | int): 页码。 示例为 1.
+        total (Unset | int): 报告总数。 示例为 100.
+        total_pages (Unset | int): 总页数。 示例为 10.
     """
 
     page: Unset | int = UNSET

@@ -22,21 +22,17 @@ T = TypeVar("T", bound="SUSHIReportHeader")
 
 @_attrs_define
 class SUSHIReportHeader:
-    """Generalized report header that defines the requested report, the requestor, the customer, filters applied,
-    reportAttributes applied and any exceptions.
+    """通用报告头，描述所请求的报告、请求方、客户、生效的过滤条件、生效的 reportAttributes 以及出现的异常。
 
-        Attributes:
-            release (str): The release or version of the report. Example: RD1.
-            report_id (str): The report ID or code or shortname. Typically this will be the same code provided in the Report
-                parameter of the request. Example: DSR.
-            report_name (str): The long name of the report. Example: Dataset Report.
-            created (Union[Unset, datetime.datetime]): Time the report was prepared
-            created_by (Unset | str): Name of the organization producing the report. Example: Science Data Bank.
-            exceptions (Union[Unset, list['SUSHIErrorModel']]): Series of exceptions encounted when preparing the report.
-            report_attributes (Union[Unset, list['SUSHIReportHeaderReportAttributesItem']]): Zero or more additional
-                attributes applied to the report. Attributes inform the level of detail in the report.
-            report_filters (Union[Unset, list['SUSHIReportHeaderReportFiltersItem']]): Zero or more report filters used for
-                this report.  Typically  reflect filters provided on the Request.  Filters limit the data to be reported on.
+    属性：
+        release (str): 报告的发布版本。 示例为 RD1.
+        report_id (str): 报告的 ID、代码或简称，通常与请求中 Report 参数传入的代码一致。 示例为 DSR.
+        report_name (str): 报告的完整名称。 示例为 Dataset Report.
+        created (Union[Unset, datetime.datetime]): 报告生成时间
+        created_by (Unset | str): 生成该报告的机构名称。 示例为 Science Data Bank.
+        exceptions (Union[Unset, list['SUSHIErrorModel']]): 生成报告过程中遇到的异常列表。
+        report_attributes (Union[Unset, list['SUSHIReportHeaderReportAttributesItem']]): 作用于该报告的零个或多个附加属性，属性决定报告的明细程度。
+        report_filters (Union[Unset, list['SUSHIReportHeaderReportFiltersItem']]): 该报告使用的零个或多个过滤条件，通常对应请求里传入的过滤条件，用于限定报告的数据范围。
     """
 
     release: str

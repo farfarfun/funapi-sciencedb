@@ -57,18 +57,18 @@ def sync_detailed(
     client: AuthenticatedClient | Client,
     doi: str,
 ) -> Response[APIResultMetricsResult]:
-    """search dataset metrics by doi
+    """按 DOI 查询数据集的统计指标
 
-     search dataset metrics by doi
+     按 DOI 查询数据集的统计指标
 
-    Args:
+    参数：
         doi (str):
 
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
+    抛出：
+        errors.UnexpectedStatus：服务端返回了文档里没有声明的状态码，且 Client.raise_on_unexpected_status 为 True。
+        httpx.TimeoutException：请求耗时超过 Client.timeout。
 
-    Returns:
+    返回：
         Response[APIResultMetricsResult]
     """
 
@@ -88,18 +88,18 @@ def sync(
     client: AuthenticatedClient | Client,
     doi: str,
 ) -> APIResultMetricsResult | None:
-    """search dataset metrics by doi
+    """按 DOI 查询数据集的统计指标
 
-     search dataset metrics by doi
+     按 DOI 查询数据集的统计指标
 
-    Args:
+    参数：
         doi (str):
 
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
+    抛出：
+        errors.UnexpectedStatus：服务端返回了文档里没有声明的状态码，且 Client.raise_on_unexpected_status 为 True。
+        httpx.TimeoutException：请求耗时超过 Client.timeout。
 
-    Returns:
+    返回：
         APIResultMetricsResult
     """
 
@@ -114,18 +114,18 @@ async def asyncio_detailed(
     client: AuthenticatedClient | Client,
     doi: str,
 ) -> Response[APIResultMetricsResult]:
-    """search dataset metrics by doi
+    """按 DOI 查询数据集的统计指标
 
-     search dataset metrics by doi
+     按 DOI 查询数据集的统计指标
 
-    Args:
+    参数：
         doi (str):
 
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
+    抛出：
+        errors.UnexpectedStatus：服务端返回了文档里没有声明的状态码，且 Client.raise_on_unexpected_status 为 True。
+        httpx.TimeoutException：请求耗时超过 Client.timeout。
 
-    Returns:
+    返回：
         Response[APIResultMetricsResult]
     """
 
@@ -143,18 +143,18 @@ async def asyncio(
     client: AuthenticatedClient | Client,
     doi: str,
 ) -> APIResultMetricsResult | None:
-    """search dataset metrics by doi
+    """按 DOI 查询数据集的统计指标
 
-     search dataset metrics by doi
+     按 DOI 查询数据集的统计指标
 
-    Args:
+    参数：
         doi (str):
 
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
+    抛出：
+        errors.UnexpectedStatus：服务端返回了文档里没有声明的状态码，且 Client.raise_on_unexpected_status 为 True。
+        httpx.TimeoutException：请求耗时超过 Client.timeout。
 
-    Returns:
+    返回：
         APIResultMetricsResult
     """
 

@@ -15,11 +15,11 @@ T = TypeVar("T", bound="SUSHIReportPage")
 
 @_attrs_define
 class SUSHIReportPage:
-    """page wrapper of reports
+    """报告的分页包装结构
 
-    Attributes:
-        reports (Union[Unset, list['SUSHIReportList']]): list of reports
-        meta (Union[Unset, SUSHIPageMeta]): page wrapper of reports
+    属性：
+        reports (Union[Unset, list['SUSHIReportList']]): 报告列表
+        meta (Union[Unset, SUSHIPageMeta]): 报告的分页包装结构
     """
 
     reports: Unset | list["SUSHIReportList"] = UNSET

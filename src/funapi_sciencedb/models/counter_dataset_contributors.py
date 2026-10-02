@@ -11,9 +11,9 @@ T = TypeVar("T", bound="COUNTERDatasetContributors")
 @_attrs_define
 class COUNTERDatasetContributors:
     """
-    Attributes:
-        type (COUNTERDatasetContributorsType):  Example: name.
-        value (str): Value of the contributor identifier Example: John Smith.
+    属性：
+        type (COUNTERDatasetContributorsType):  示例为 name.
+        value (str): 贡献者标识的值 示例为 John Smith.
     """
 
     type: COUNTERDatasetContributorsType

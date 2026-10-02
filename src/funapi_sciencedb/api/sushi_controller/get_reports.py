@@ -61,19 +61,19 @@ def sync_detailed(
     pagenumber: Unset | int = 1,
     pagesize: Unset | int = 10,
 ) -> Response[SUSHIReportPage]:
-    """getReports
+    """获取报告列表
 
-     This resource returns a list of reports supported by the API for a given application.
+     返回该 API 为指定应用支持的报告列表。
 
-    Args:
-        pagenumber (Unset | int):  Default: 1.
-        pagesize (Unset | int):  Default: 10.
+    参数：
+        pagenumber (Unset | int):  默认值为 1.
+        pagesize (Unset | int):  默认值为 10.
 
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
+    抛出：
+        errors.UnexpectedStatus：服务端返回了文档里没有声明的状态码，且 Client.raise_on_unexpected_status 为 True。
+        httpx.TimeoutException：请求耗时超过 Client.timeout。
 
-    Returns:
+    返回：
         Response[SUSHIReportPage]
     """
 
@@ -95,19 +95,19 @@ def sync(
     pagenumber: Unset | int = 1,
     pagesize: Unset | int = 10,
 ) -> SUSHIReportPage | None:
-    """getReports
+    """获取报告列表
 
-     This resource returns a list of reports supported by the API for a given application.
+     返回该 API 为指定应用支持的报告列表。
 
-    Args:
-        pagenumber (Unset | int):  Default: 1.
-        pagesize (Unset | int):  Default: 10.
+    参数：
+        pagenumber (Unset | int):  默认值为 1.
+        pagesize (Unset | int):  默认值为 10.
 
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
+    抛出：
+        errors.UnexpectedStatus：服务端返回了文档里没有声明的状态码，且 Client.raise_on_unexpected_status 为 True。
+        httpx.TimeoutException：请求耗时超过 Client.timeout。
 
-    Returns:
+    返回：
         SUSHIReportPage
     """
 
@@ -124,19 +124,19 @@ async def asyncio_detailed(
     pagenumber: Unset | int = 1,
     pagesize: Unset | int = 10,
 ) -> Response[SUSHIReportPage]:
-    """getReports
+    """获取报告列表
 
-     This resource returns a list of reports supported by the API for a given application.
+     返回该 API 为指定应用支持的报告列表。
 
-    Args:
-        pagenumber (Unset | int):  Default: 1.
-        pagesize (Unset | int):  Default: 10.
+    参数：
+        pagenumber (Unset | int):  默认值为 1.
+        pagesize (Unset | int):  默认值为 10.
 
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
+    抛出：
+        errors.UnexpectedStatus：服务端返回了文档里没有声明的状态码，且 Client.raise_on_unexpected_status 为 True。
+        httpx.TimeoutException：请求耗时超过 Client.timeout。
 
-    Returns:
+    返回：
         Response[SUSHIReportPage]
     """
 
@@ -156,19 +156,19 @@ async def asyncio(
     pagenumber: Unset | int = 1,
     pagesize: Unset | int = 10,
 ) -> SUSHIReportPage | None:
-    """getReports
+    """获取报告列表
 
-     This resource returns a list of reports supported by the API for a given application.
+     返回该 API 为指定应用支持的报告列表。
 
-    Args:
-        pagenumber (Unset | int):  Default: 1.
-        pagesize (Unset | int):  Default: 10.
+    参数：
+        pagenumber (Unset | int):  默认值为 1.
+        pagesize (Unset | int):  默认值为 10.
 
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
+    抛出：
+        errors.UnexpectedStatus：服务端返回了文档里没有声明的状态码，且 Client.raise_on_unexpected_status 为 True。
+        httpx.TimeoutException：请求耗时超过 Client.timeout。
 
-    Returns:
+    返回：
         SUSHIReportPage
     """
 

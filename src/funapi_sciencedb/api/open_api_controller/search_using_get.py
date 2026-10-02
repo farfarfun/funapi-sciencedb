@@ -65,18 +65,18 @@ def sync_detailed(
     range_: Unset | int = UNSET,
     size: Unset | int = 10,
 ) -> Response[APIResultSearchResult]:
-    """分页搜索数据集。
+    """分页搜索数据集
 
-    结果按发布时间降序排列。
+     结果按发布时间降序排列
 
     参数：
-        page (Unset | int)：默认值为 1。
+        page (Unset | int):  默认值为 1.
         range_ (Unset | int):
-        size (Unset | int)：默认值为 10。
+        size (Unset | int):  默认值为 10.
 
     抛出：
-        errors.UnexpectedStatus：服务器返回未记录的状态码且 ``Client.raise_on_unexpected_status`` 为 ``True``。
-        httpx.TimeoutException：请求耗时超过 ``Client.timeout``。
+        errors.UnexpectedStatus：服务端返回了文档里没有声明的状态码，且 Client.raise_on_unexpected_status 为 True。
+        httpx.TimeoutException：请求耗时超过 Client.timeout。
 
     返回：
         Response[APIResultSearchResult]
@@ -102,18 +102,18 @@ def sync(
     range_: Unset | int = UNSET,
     size: Unset | int = 10,
 ) -> APIResultSearchResult | None:
-    """分页搜索数据集。
+    """分页搜索数据集
 
-    结果按发布时间降序排列。
+     结果按发布时间降序排列
 
     参数：
-        page (Unset | int)：默认值为 1。
+        page (Unset | int):  默认值为 1.
         range_ (Unset | int):
-        size (Unset | int)：默认值为 10。
+        size (Unset | int):  默认值为 10.
 
     抛出：
-        errors.UnexpectedStatus：服务器返回未记录的状态码且 ``Client.raise_on_unexpected_status`` 为 ``True``。
-        httpx.TimeoutException：请求耗时超过 ``Client.timeout``。
+        errors.UnexpectedStatus：服务端返回了文档里没有声明的状态码，且 Client.raise_on_unexpected_status 为 True。
+        httpx.TimeoutException：请求耗时超过 Client.timeout。
 
     返回：
         APIResultSearchResult
@@ -134,18 +134,18 @@ async def asyncio_detailed(
     range_: Unset | int = UNSET,
     size: Unset | int = 10,
 ) -> Response[APIResultSearchResult]:
-    """异步分页搜索数据集并返回完整响应。
+    """分页搜索数据集
 
-    结果按发布时间降序排列。
+     结果按发布时间降序排列
 
     参数：
-        page (Unset | int)：默认值为 1。
+        page (Unset | int):  默认值为 1.
         range_ (Unset | int):
-        size (Unset | int)：默认值为 10。
+        size (Unset | int):  默认值为 10.
 
     抛出：
-        errors.UnexpectedStatus：服务器返回未记录的状态码且 ``Client.raise_on_unexpected_status`` 为 ``True``。
-        httpx.TimeoutException：请求耗时超过 ``Client.timeout``。
+        errors.UnexpectedStatus：服务端返回了文档里没有声明的状态码，且 Client.raise_on_unexpected_status 为 True。
+        httpx.TimeoutException：请求耗时超过 Client.timeout。
 
     返回：
         Response[APIResultSearchResult]
@@ -169,18 +169,18 @@ async def asyncio(
     range_: Unset | int = UNSET,
     size: Unset | int = 10,
 ) -> APIResultSearchResult | None:
-    """异步分页搜索数据集。
+    """分页搜索数据集
 
-    结果按发布时间降序排列。
+     结果按发布时间降序排列
 
     参数：
-        page (Unset | int)：默认值为 1。
+        page (Unset | int):  默认值为 1.
         range_ (Unset | int):
-        size (Unset | int)：默认值为 10。
+        size (Unset | int):  默认值为 10.
 
     抛出：
-        errors.UnexpectedStatus：服务器返回未记录的状态码且 ``Client.raise_on_unexpected_status`` 为 ``True``。
-        httpx.TimeoutException：请求耗时超过 ``Client.timeout``。
+        errors.UnexpectedStatus：服务端返回了文档里没有声明的状态码，且 Client.raise_on_unexpected_status 为 True。
+        httpx.TimeoutException：请求耗时超过 Client.timeout。
 
     返回：
         APIResultSearchResult

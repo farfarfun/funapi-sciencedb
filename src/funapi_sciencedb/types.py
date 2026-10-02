@@ -1,4 +1,4 @@
-"""Contains some shared types for properties"""
+"""模型属性用到的公共类型。"""
 
 from collections.abc import MutableMapping
 from http import HTTPStatus
@@ -24,14 +24,14 @@ FileJsonType = tuple[str | None, BinaryIO, str | None]
 
 @define
 class File:
-    """Contains information for file uploads"""
+    """文件上传所需的信息。"""
 
     payload: BinaryIO
     file_name: str | None = None
     mime_type: str | None = None
 
     def to_tuple(self) -> FileJsonType:
-        """Return a tuple representation that httpx will accept for multipart/form-data"""
+        """返回 httpx 能用于 multipart/form-data 的元组表示"""
         return self.file_name, self.payload, self.mime_type
 
 
@@ -40,7 +40,7 @@ T = TypeVar("T")
 
 @define
 class Response(Generic[T]):
-    """A response from an endpoint"""
+    """接口返回的响应。"""
 
     status_code: HTTPStatus
     content: bytes

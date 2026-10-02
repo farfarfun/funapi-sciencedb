@@ -7,30 +7,27 @@ from attrs import define, evolve, field
 
 @define
 class Client:
-    """用于管理 API 相关数据的客户端。
+    """用于保存 API 相关数据的客户端。
 
-    以下参数可作为关键字参数传入，并用于在内部构造 httpx 客户端：
+    下列参数以关键字参数传入，用于在内部构造 httpx 客户端：
 
-        ``base_url``：API 的基础 URL，所有请求均使用相对于此 URL 的路径。
+        ``base_url``：API 的基础 URL，所有请求都使用相对于它的路径。
 
-        ``cookies``：每次请求时发送的 cookie 字典。
+        ``cookies``：每个请求都会带上的 cookie 字典。
 
-        ``headers``：每次请求时发送的请求头字典。
+        ``headers``：每个请求都会带上的请求头字典。
 
-        ``timeout``：请求允许花费的最长时间，超过后 API 函数会抛出
-        ``httpx.TimeoutException``。
+        ``timeout``：单个请求允许的最长耗时，超过后 API 函数会抛出 httpx.TimeoutException。
 
-        ``verify_ssl``：是否验证 API 服务器的 SSL 证书。生产环境中应设为 ``True``，
-        测试时可设为 ``False``。
+        ``verify_ssl``：是否校验 API 服务端的 SSL 证书。生产环境应为 True，仅测试时可以设为 False。
 
-        ``follow_redirects``：是否跟随重定向，默认值为 ``False``。
+        ``follow_redirects``：是否跟随重定向，默认为 False。
 
-        ``httpx_args``：传给 ``httpx.Client`` 和 ``httpx.AsyncClient`` 构造函数的额外参数字典。
+        ``httpx_args``：传给 ``httpx.Client`` 与 ``httpx.AsyncClient`` 构造函数的额外参数字典。
 
 
     属性：
-        raise_on_unexpected_status：当 API 返回的状态码未记录在源 OpenAPI 文档中时，
-            是否抛出 ``errors.UnexpectedStatus``。也可作为关键字参数传给构造函数。
+        raise_on_unexpected_status：当 API 返回的状态码没有写在源 OpenAPI 文档里时，是否抛出 errors.UnexpectedStatus。也可以作为关键字参数传给构造函数。
     """
 
     raise_on_unexpected_status: bool = field(default=False, kw_only=True)
@@ -49,7 +46,7 @@ class Client:
     _async_client: httpx.AsyncClient | None = field(default=None, init=False)
 
     def with_headers(self, headers: dict[str, str]) -> "Client":
-        """Get a new client matching this one with additional headers"""
+        """返回一个与当前客户端一致、但追加了请求头的新客户端"""
         if self._client is not None:
             self._client.headers.update(headers)
         if self._async_client is not None:
@@ -57,7 +54,7 @@ class Client:
         return evolve(self, headers={**self._headers, **headers})
 
     def with_cookies(self, cookies: dict[str, str]) -> "Client":
-        """Get a new client matching this one with additional cookies"""
+        """返回一个与当前客户端一致、但追加了 cookie 的新客户端"""
         if self._client is not None:
             self._client.cookies.update(cookies)
         if self._async_client is not None:
@@ -65,7 +62,7 @@ class Client:
         return evolve(self, cookies={**self._cookies, **cookies})
 
     def with_timeout(self, timeout: httpx.Timeout) -> "Client":
-        """Get a new client matching this one with a new timeout (in seconds)"""
+        """返回一个与当前客户端一致、但使用新超时时间（秒）的新客户端"""
         if self._client is not None:
             self._client.timeout = timeout
         if self._async_client is not None:
@@ -73,15 +70,15 @@ class Client:
         return evolve(self, timeout=timeout)
 
     def set_httpx_client(self, client: httpx.Client) -> "Client":
-        """Manually set the underlying httpx.Client
+        """手动设置底层的 httpx.Client
 
-        **NOTE**: This will override any other settings on the client, including cookies, headers, and timeout.
+        **注意**：这会覆盖客户端上的其他设置，包括 cookies、headers 和 timeout。
         """
         self._client = client
         return self
 
     def get_httpx_client(self) -> httpx.Client:
-        """Get the underlying httpx.Client, constructing a new one if not previously set"""
+        """获取底层的 httpx.Client，没有设置过就新建一个"""
         if self._client is None:
             self._client = httpx.Client(
                 base_url=self._base_url,
@@ -95,24 +92,24 @@ class Client:
         return self._client
 
     def __enter__(self) -> "Client":
-        """Enter a context manager for self.client—you cannot enter twice (see httpx docs)"""
+        """进入 self.client 的上下文管理器，不能重复进入（见 httpx 文档）"""
         self.get_httpx_client().__enter__()
         return self
 
     def __exit__(self, *args: object, **kwargs: Any) -> None:
-        """Exit a context manager for internal httpx.Client (see httpx docs)"""
+        """退出内部 httpx.Client 的上下文管理器（见 httpx 文档）"""
         self.get_httpx_client().__exit__(*args, **kwargs)
 
     def set_async_httpx_client(self, async_client: httpx.AsyncClient) -> "Client":
-        """Manually the underlying httpx.AsyncClient
+        """手动设置底层的 httpx.AsyncClient
 
-        **NOTE**: This will override any other settings on the client, including cookies, headers, and timeout.
+        **注意**：这会覆盖客户端上的其他设置，包括 cookies、headers 和 timeout。
         """
         self._async_client = async_client
         return self
 
     def get_async_httpx_client(self) -> httpx.AsyncClient:
-        """Get the underlying httpx.AsyncClient, constructing a new one if not previously set"""
+        """获取底层的 httpx.AsyncClient，没有设置过就新建一个"""
         if self._async_client is None:
             self._async_client = httpx.AsyncClient(
                 base_url=self._base_url,
@@ -126,43 +123,40 @@ class Client:
         return self._async_client
 
     async def __aenter__(self) -> "Client":
-        """Enter a context manager for underlying httpx.AsyncClient—you cannot enter twice (see httpx docs)"""
+        """进入底层 httpx.AsyncClient 的上下文管理器，不能重复进入（见 httpx 文档）"""
         await self.get_async_httpx_client().__aenter__()
         return self
 
     async def __aexit__(self, *args: object, **kwargs: Any) -> None:
-        """Exit a context manager for underlying httpx.AsyncClient (see httpx docs)"""
+        """退出底层 httpx.AsyncClient 的上下文管理器（见 httpx 文档）"""
         await self.get_async_httpx_client().__aexit__(*args, **kwargs)
 
 
 @define
 class AuthenticatedClient:
-    """用于访问受保护端点的已认证客户端。
+    """已完成认证、可以访问受保护端点的客户端。
 
-    以下参数可作为关键字参数传入，并用于在内部构造 httpx 客户端：
+    下列参数以关键字参数传入，用于在内部构造 httpx 客户端：
 
-        ``base_url``：API 的基础 URL，所有请求均使用相对于此 URL 的路径。
+        ``base_url``：API 的基础 URL，所有请求都使用相对于它的路径。
 
-        ``cookies``：每次请求时发送的 cookie 字典。
+        ``cookies``：每个请求都会带上的 cookie 字典。
 
-        ``headers``：每次请求时发送的请求头字典。
+        ``headers``：每个请求都会带上的请求头字典。
 
-        ``timeout``：请求允许花费的最长时间，超过后 API 函数会抛出
-        ``httpx.TimeoutException``。
+        ``timeout``：单个请求允许的最长耗时，超过后 API 函数会抛出 httpx.TimeoutException。
 
-        ``verify_ssl``：是否验证 API 服务器的 SSL 证书。生产环境中应设为 ``True``，
-        测试时可设为 ``False``。
+        ``verify_ssl``：是否校验 API 服务端的 SSL 证书。生产环境应为 True，仅测试时可以设为 False。
 
-        ``follow_redirects``：是否跟随重定向，默认值为 ``False``。
+        ``follow_redirects``：是否跟随重定向，默认为 False。
 
-        ``httpx_args``：传给 ``httpx.Client`` 和 ``httpx.AsyncClient`` 构造函数的额外参数字典。
+        ``httpx_args``：传给 ``httpx.Client`` 与 ``httpx.AsyncClient`` 构造函数的额外参数字典。
 
 
     属性：
-        raise_on_unexpected_status：当 API 返回的状态码未记录在源 OpenAPI 文档中时，
-            是否抛出 ``errors.UnexpectedStatus``。也可作为关键字参数传给构造函数。
+        raise_on_unexpected_status：当 API 返回的状态码没有写在源 OpenAPI 文档里时，是否抛出 errors.UnexpectedStatus。也可以作为关键字参数传给构造函数。
         token：用于认证的令牌。
-        prefix：认证请求头中令牌的前缀。
+        prefix：认证请求头里令牌的前缀。
         auth_header_name：认证请求头的名称。
     """
 
@@ -186,7 +180,7 @@ class AuthenticatedClient:
     auth_header_name: str = "Authorization"
 
     def with_headers(self, headers: dict[str, str]) -> "AuthenticatedClient":
-        """Get a new client matching this one with additional headers"""
+        """返回一个与当前客户端一致、但追加了请求头的新客户端"""
         if self._client is not None:
             self._client.headers.update(headers)
         if self._async_client is not None:
@@ -194,7 +188,7 @@ class AuthenticatedClient:
         return evolve(self, headers={**self._headers, **headers})
 
     def with_cookies(self, cookies: dict[str, str]) -> "AuthenticatedClient":
-        """Get a new client matching this one with additional cookies"""
+        """返回一个与当前客户端一致、但追加了 cookie 的新客户端"""
         if self._client is not None:
             self._client.cookies.update(cookies)
         if self._async_client is not None:
@@ -202,7 +196,7 @@ class AuthenticatedClient:
         return evolve(self, cookies={**self._cookies, **cookies})
 
     def with_timeout(self, timeout: httpx.Timeout) -> "AuthenticatedClient":
-        """Get a new client matching this one with a new timeout (in seconds)"""
+        """返回一个与当前客户端一致、但使用新超时时间（秒）的新客户端"""
         if self._client is not None:
             self._client.timeout = timeout
         if self._async_client is not None:
@@ -210,15 +204,15 @@ class AuthenticatedClient:
         return evolve(self, timeout=timeout)
 
     def set_httpx_client(self, client: httpx.Client) -> "AuthenticatedClient":
-        """Manually set the underlying httpx.Client
+        """手动设置底层的 httpx.Client
 
-        **NOTE**: This will override any other settings on the client, including cookies, headers, and timeout.
+        **注意**：这会覆盖客户端上的其他设置，包括 cookies、headers 和 timeout。
         """
         self._client = client
         return self
 
     def get_httpx_client(self) -> httpx.Client:
-        """Get the underlying httpx.Client, constructing a new one if not previously set"""
+        """获取底层的 httpx.Client，没有设置过就新建一个"""
         if self._client is None:
             self._headers[self.auth_header_name] = (
                 f"{self.prefix} {self.token}" if self.prefix else self.token
@@ -235,26 +229,26 @@ class AuthenticatedClient:
         return self._client
 
     def __enter__(self) -> "AuthenticatedClient":
-        """Enter a context manager for self.client—you cannot enter twice (see httpx docs)"""
+        """进入 self.client 的上下文管理器，不能重复进入（见 httpx 文档）"""
         self.get_httpx_client().__enter__()
         return self
 
     def __exit__(self, *args: object, **kwargs: Any) -> None:
-        """Exit a context manager for internal httpx.Client (see httpx docs)"""
+        """退出内部 httpx.Client 的上下文管理器（见 httpx 文档）"""
         self.get_httpx_client().__exit__(*args, **kwargs)
 
     def set_async_httpx_client(
         self, async_client: httpx.AsyncClient
     ) -> "AuthenticatedClient":
-        """Manually the underlying httpx.AsyncClient
+        """手动设置底层的 httpx.AsyncClient
 
-        **NOTE**: This will override any other settings on the client, including cookies, headers, and timeout.
+        **注意**：这会覆盖客户端上的其他设置，包括 cookies、headers 和 timeout。
         """
         self._async_client = async_client
         return self
 
     def get_async_httpx_client(self) -> httpx.AsyncClient:
-        """Get the underlying httpx.AsyncClient, constructing a new one if not previously set"""
+        """获取底层的 httpx.AsyncClient，没有设置过就新建一个"""
         if self._async_client is None:
             self._headers[self.auth_header_name] = (
                 f"{self.prefix} {self.token}" if self.prefix else self.token
@@ -271,10 +265,10 @@ class AuthenticatedClient:
         return self._async_client
 
     async def __aenter__(self) -> "AuthenticatedClient":
-        """Enter a context manager for underlying httpx.AsyncClient—you cannot enter twice (see httpx docs)"""
+        """进入底层 httpx.AsyncClient 的上下文管理器，不能重复进入（见 httpx 文档）"""
         await self.get_async_httpx_client().__aenter__()
         return self
 
     async def __aexit__(self, *args: object, **kwargs: Any) -> None:
-        """Exit a context manager for underlying httpx.AsyncClient (see httpx docs)"""
+        """退出底层 httpx.AsyncClient 的上下文管理器（见 httpx 文档）"""
         await self.get_async_httpx_client().__aexit__(*args, **kwargs)

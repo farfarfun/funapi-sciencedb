@@ -55,18 +55,18 @@ def sync_detailed(
     client: AuthenticatedClient | Client,
     doi: str,
 ) -> Response[str]:
-    """get dataset's detail information by it's doi
+    """按 DOI 获取数据集的详细信息
 
-     information's format is referenced by https://schema.org/Dataset
+     信息格式参照 https://schema.org/Dataset
 
-    Args:
+    参数：
         doi (str):
 
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
+    抛出：
+        errors.UnexpectedStatus：服务端返回了文档里没有声明的状态码，且 Client.raise_on_unexpected_status 为 True。
+        httpx.TimeoutException：请求耗时超过 Client.timeout。
 
-    Returns:
+    返回：
         Response[str]
     """
 
@@ -86,18 +86,18 @@ def sync(
     client: AuthenticatedClient | Client,
     doi: str,
 ) -> str | None:
-    """get dataset's detail information by it's doi
+    """按 DOI 获取数据集的详细信息
 
-     information's format is referenced by https://schema.org/Dataset
+     信息格式参照 https://schema.org/Dataset
 
-    Args:
+    参数：
         doi (str):
 
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
+    抛出：
+        errors.UnexpectedStatus：服务端返回了文档里没有声明的状态码，且 Client.raise_on_unexpected_status 为 True。
+        httpx.TimeoutException：请求耗时超过 Client.timeout。
 
-    Returns:
+    返回：
         str
     """
 
@@ -112,18 +112,18 @@ async def asyncio_detailed(
     client: AuthenticatedClient | Client,
     doi: str,
 ) -> Response[str]:
-    """get dataset's detail information by it's doi
+    """按 DOI 获取数据集的详细信息
 
-     information's format is referenced by https://schema.org/Dataset
+     信息格式参照 https://schema.org/Dataset
 
-    Args:
+    参数：
         doi (str):
 
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
+    抛出：
+        errors.UnexpectedStatus：服务端返回了文档里没有声明的状态码，且 Client.raise_on_unexpected_status 为 True。
+        httpx.TimeoutException：请求耗时超过 Client.timeout。
 
-    Returns:
+    返回：
         Response[str]
     """
 
@@ -141,18 +141,18 @@ async def asyncio(
     client: AuthenticatedClient | Client,
     doi: str,
 ) -> str | None:
-    """get dataset's detail information by it's doi
+    """按 DOI 获取数据集的详细信息
 
-     information's format is referenced by https://schema.org/Dataset
+     信息格式参照 https://schema.org/Dataset
 
-    Args:
+    参数：
         doi (str):
 
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
+    抛出：
+        errors.UnexpectedStatus：服务端返回了文档里没有声明的状态码，且 Client.raise_on_unexpected_status 为 True。
+        httpx.TimeoutException：请求耗时超过 Client.timeout。
 
-    Returns:
+    返回：
         str
     """
 

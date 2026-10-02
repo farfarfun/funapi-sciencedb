@@ -10,14 +10,14 @@ T = TypeVar("T", bound="MetricsResult")
 
 @_attrs_define
 class MetricsResult:
-    """wrapper of records of '/harvest' and '/search' and '/metrics' API
+    """'/harvest'、'/search' 与 '/metrics' 接口记录的包装结构
 
-    Attributes:
-        title_zh (Unset | str): Chinese title of dataset
-        title_en (Unset | str): English title of dataset
-        visit (Unset | int): Number of data set accesses
-        download (Unset | int): Number of data set downloads
-        ref_papers (Unset | int): The number of papers cited in the dataset
+    属性：
+        title_zh (Unset | str): 数据集的中文标题
+        title_en (Unset | str): 数据集的英文标题
+        visit (Unset | int): 数据集的访问次数
+        download (Unset | int): 数据集的下载次数
+        ref_papers (Unset | int): 引用该数据集的论文数量
     """
 
     title_zh: Unset | str = UNSET

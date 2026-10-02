@@ -14,7 +14,7 @@ T = TypeVar("T", bound="COUNTERDatasetPerformance")
 @_attrs_define
 class COUNTERDatasetPerformance:
     """
-    Attributes:
+    属性：
         instance (list['COUNTERDatasetInstance']):
         period (COUNTERDatasetPeriod):
     """

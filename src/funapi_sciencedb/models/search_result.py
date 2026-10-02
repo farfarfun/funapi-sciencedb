@@ -14,14 +14,14 @@ T = TypeVar("T", bound="SearchResult")
 
 @_attrs_define
 class SearchResult:
-    """wrapper of records of '/harvest' and '/search' API
+    """'/harvest' 与 '/search' 接口记录的包装结构
 
-    Attributes:
+    属性：
         page_no (Unset | int):
         page_size (Unset | int):
-        total_pages (Unset | int): total pages of records
-        total_elements (Unset | int): total number of records
-        recommend_data (Union[Unset, list['SearchRecord']]): the list of current page records
+        total_pages (Unset | int): 记录总页数
+        total_elements (Unset | int): 记录总数
+        recommend_data (Union[Unset, list['SearchRecord']]): 当前页的记录列表
     """
 
     page_no: Unset | int = UNSET

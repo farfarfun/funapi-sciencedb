@@ -59,17 +59,17 @@ def sync_detailed(
     client: AuthenticatedClient | Client,
     publisher: Unset | str = UNSET,
 ) -> Response[SUSHIReport]:
-    """This resource returns the COUNTER Dataset Report by id
+    """按 id 返回 COUNTER 数据集报告
 
-    Args:
+    参数：
         id (str):
         publisher (Unset | str):
 
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
+    抛出：
+        errors.UnexpectedStatus：服务端返回了文档里没有声明的状态码，且 Client.raise_on_unexpected_status 为 True。
+        httpx.TimeoutException：请求耗时超过 Client.timeout。
 
-    Returns:
+    返回：
         Response[SUSHIReport]
     """
 
@@ -91,17 +91,17 @@ def sync(
     client: AuthenticatedClient | Client,
     publisher: Unset | str = UNSET,
 ) -> SUSHIReport | None:
-    """This resource returns the COUNTER Dataset Report by id
+    """按 id 返回 COUNTER 数据集报告
 
-    Args:
+    参数：
         id (str):
         publisher (Unset | str):
 
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
+    抛出：
+        errors.UnexpectedStatus：服务端返回了文档里没有声明的状态码，且 Client.raise_on_unexpected_status 为 True。
+        httpx.TimeoutException：请求耗时超过 Client.timeout。
 
-    Returns:
+    返回：
         SUSHIReport
     """
 
@@ -118,17 +118,17 @@ async def asyncio_detailed(
     client: AuthenticatedClient | Client,
     publisher: Unset | str = UNSET,
 ) -> Response[SUSHIReport]:
-    """This resource returns the COUNTER Dataset Report by id
+    """按 id 返回 COUNTER 数据集报告
 
-    Args:
+    参数：
         id (str):
         publisher (Unset | str):
 
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
+    抛出：
+        errors.UnexpectedStatus：服务端返回了文档里没有声明的状态码，且 Client.raise_on_unexpected_status 为 True。
+        httpx.TimeoutException：请求耗时超过 Client.timeout。
 
-    Returns:
+    返回：
         Response[SUSHIReport]
     """
 
@@ -148,17 +148,17 @@ async def asyncio(
     client: AuthenticatedClient | Client,
     publisher: Unset | str = UNSET,
 ) -> SUSHIReport | None:
-    """This resource returns the COUNTER Dataset Report by id
+    """按 id 返回 COUNTER 数据集报告
 
-    Args:
+    参数：
         id (str):
         publisher (Unset | str):
 
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
+    抛出：
+        errors.UnexpectedStatus：服务端返回了文档里没有声明的状态码，且 Client.raise_on_unexpected_status 为 True。
+        httpx.TimeoutException：请求耗时超过 Client.timeout。
 
-    Returns:
+    返回：
         SUSHIReport
     """
 

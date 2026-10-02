@@ -69,21 +69,21 @@ def sync_detailed(
     size: Unset | int = 10,
     start_time: Unset | str = "1970-01-01",
 ) -> Response[APIResultSearchResult]:
-    """harvest dataset by dataset's publish time period(start_time and end_time)
+    """按数据集发布时间区间（start_time 与 end_time）批量获取数据集
 
-     result is order by publish time desc
+     结果按发布时间降序排列
 
-    Args:
-        end_time (Unset | str):  Default: '2099-01-01'.
-        page (Unset | int):  Default: 1.
-        size (Unset | int):  Default: 10.
-        start_time (Unset | str):  Default: '1970-01-01'.
+    参数：
+        end_time (Unset | str):  默认值为 '2099-01-01'.
+        page (Unset | int):  默认值为 1.
+        size (Unset | int):  默认值为 10.
+        start_time (Unset | str):  默认值为 '1970-01-01'.
 
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
+    抛出：
+        errors.UnexpectedStatus：服务端返回了文档里没有声明的状态码，且 Client.raise_on_unexpected_status 为 True。
+        httpx.TimeoutException：请求耗时超过 Client.timeout。
 
-    Returns:
+    返回：
         Response[APIResultSearchResult]
     """
 
@@ -109,21 +109,21 @@ def sync(
     size: Unset | int = 10,
     start_time: Unset | str = "1970-01-01",
 ) -> APIResultSearchResult | None:
-    """harvest dataset by dataset's publish time period(start_time and end_time)
+    """按数据集发布时间区间（start_time 与 end_time）批量获取数据集
 
-     result is order by publish time desc
+     结果按发布时间降序排列
 
-    Args:
-        end_time (Unset | str):  Default: '2099-01-01'.
-        page (Unset | int):  Default: 1.
-        size (Unset | int):  Default: 10.
-        start_time (Unset | str):  Default: '1970-01-01'.
+    参数：
+        end_time (Unset | str):  默认值为 '2099-01-01'.
+        page (Unset | int):  默认值为 1.
+        size (Unset | int):  默认值为 10.
+        start_time (Unset | str):  默认值为 '1970-01-01'.
 
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
+    抛出：
+        errors.UnexpectedStatus：服务端返回了文档里没有声明的状态码，且 Client.raise_on_unexpected_status 为 True。
+        httpx.TimeoutException：请求耗时超过 Client.timeout。
 
-    Returns:
+    返回：
         APIResultSearchResult
     """
 
@@ -144,21 +144,21 @@ async def asyncio_detailed(
     size: Unset | int = 10,
     start_time: Unset | str = "1970-01-01",
 ) -> Response[APIResultSearchResult]:
-    """harvest dataset by dataset's publish time period(start_time and end_time)
+    """按数据集发布时间区间（start_time 与 end_time）批量获取数据集
 
-     result is order by publish time desc
+     结果按发布时间降序排列
 
-    Args:
-        end_time (Unset | str):  Default: '2099-01-01'.
-        page (Unset | int):  Default: 1.
-        size (Unset | int):  Default: 10.
-        start_time (Unset | str):  Default: '1970-01-01'.
+    参数：
+        end_time (Unset | str):  默认值为 '2099-01-01'.
+        page (Unset | int):  默认值为 1.
+        size (Unset | int):  默认值为 10.
+        start_time (Unset | str):  默认值为 '1970-01-01'.
 
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
+    抛出：
+        errors.UnexpectedStatus：服务端返回了文档里没有声明的状态码，且 Client.raise_on_unexpected_status 为 True。
+        httpx.TimeoutException：请求耗时超过 Client.timeout。
 
-    Returns:
+    返回：
         Response[APIResultSearchResult]
     """
 
@@ -182,21 +182,21 @@ async def asyncio(
     size: Unset | int = 10,
     start_time: Unset | str = "1970-01-01",
 ) -> APIResultSearchResult | None:
-    """harvest dataset by dataset's publish time period(start_time and end_time)
+    """按数据集发布时间区间（start_time 与 end_time）批量获取数据集
 
-     result is order by publish time desc
+     结果按发布时间降序排列
 
-    Args:
-        end_time (Unset | str):  Default: '2099-01-01'.
-        page (Unset | int):  Default: 1.
-        size (Unset | int):  Default: 10.
-        start_time (Unset | str):  Default: '1970-01-01'.
+    参数：
+        end_time (Unset | str):  默认值为 '2099-01-01'.
+        page (Unset | int):  默认值为 1.
+        size (Unset | int):  默认值为 10.
+        start_time (Unset | str):  默认值为 '1970-01-01'.
 
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
+    抛出：
+        errors.UnexpectedStatus：服务端返回了文档里没有声明的状态码，且 Client.raise_on_unexpected_status 为 True。
+        httpx.TimeoutException：请求耗时超过 Client.timeout。
 
-    Returns:
+    返回：
         APIResultSearchResult
     """
 

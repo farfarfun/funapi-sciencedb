@@ -11,9 +11,9 @@ T = TypeVar("T", bound="COUNTERPublisherIdentifiers")
 @_attrs_define
 class COUNTERPublisherIdentifiers:
     """
-    Attributes:
-        type (COUNTERPublisherIdentifiersType):  Example: ORCID.
-        value (str): Value of the publisher identifier Example: 1234-1234-1234-1234.
+    属性：
+        type (COUNTERPublisherIdentifiersType):  示例为 ORCID.
+        value (str): 出版方标识的值 示例为 1234-1234-1234-1234.
     """
 
     type: COUNTERPublisherIdentifiersType
