@@ -8,6 +8,9 @@ made against scidb.cn.
 """
 
 import asyncio
+import runpy
+import sys
+from types import ModuleType, SimpleNamespace
 from unittest.mock import MagicMock
 
 import httpx
@@ -29,6 +32,29 @@ from funapi_sciencedb.models.api_result_metrics_result import APIResultMetricsRe
 from funapi_sciencedb.models.api_result_search_result import APIResultSearchResult
 from funapi_sciencedb.models.sushi_report import SUSHIReport
 from funapi_sciencedb.models.sushi_report_page import SUSHIReportPage
+
+
+def test_import_generate_has_no_side_effects(monkeypatch):
+    calls = []
+
+    requests = ModuleType("requests")
+    requests.get = lambda *args, **kwargs: calls.append("request")
+    convert = ModuleType("funapi.convert")
+    convert.convert_openapi_v3 = lambda: calls.append("convert")
+    generate = ModuleType("funapi.generate")
+    generate.generate_api = lambda **kwargs: calls.append("generate")
+    client = ModuleType("openapi_python_client")
+    client.MetaType = SimpleNamespace(NONE=None)
+
+    monkeypatch.setitem(sys.modules, "requests", requests)
+    monkeypatch.setitem(sys.modules, "funapi", ModuleType("funapi"))
+    monkeypatch.setitem(sys.modules, "funapi.convert", convert)
+    monkeypatch.setitem(sys.modules, "funapi.generate", generate)
+    monkeypatch.setitem(sys.modules, "openapi_python_client", client)
+
+    runpy.run_path("generate.py", run_name="generate")
+
+    assert calls == []
 
 
 def test_import_top_level_package():

@@ -230,8 +230,8 @@
                 "tags": [
                     "open-api-controller"
                 ],
-                "summary": "search dataset by page",
-                "description": "result is order by publish time desc",
+                "summary": "分页搜索数据集",
+                "description": "结果按发布时间降序排列",
                 "operationId": "searchUsingGET",
                 "produces": [
                     "application/json"

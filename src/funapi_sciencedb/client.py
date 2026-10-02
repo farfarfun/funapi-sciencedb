@@ -7,31 +7,30 @@ from attrs import define, evolve, field
 
 @define
 class Client:
-    """A class for keeping track of data related to the API
+    """用于管理 API 相关数据的客户端。
 
-    The following are accepted as keyword arguments and will be used to construct httpx Clients internally:
+    以下参数可作为关键字参数传入，并用于在内部构造 httpx 客户端：
 
-        ``base_url``: The base URL for the API, all requests are made to a relative path to this URL
+        ``base_url``：API 的基础 URL，所有请求均使用相对于此 URL 的路径。
 
-        ``cookies``: A dictionary of cookies to be sent with every request
+        ``cookies``：每次请求时发送的 cookie 字典。
 
-        ``headers``: A dictionary of headers to be sent with every request
+        ``headers``：每次请求时发送的请求头字典。
 
-        ``timeout``: The maximum amount of a time a request can take. API functions will raise
-        httpx.TimeoutException if this is exceeded.
+        ``timeout``：请求允许花费的最长时间，超过后 API 函数会抛出
+        ``httpx.TimeoutException``。
 
-        ``verify_ssl``: Whether or not to verify the SSL certificate of the API server. This should be True in production,
-        but can be set to False for testing purposes.
+        ``verify_ssl``：是否验证 API 服务器的 SSL 证书。生产环境中应设为 ``True``，
+        测试时可设为 ``False``。
 
-        ``follow_redirects``: Whether or not to follow redirects. Default value is False.
+        ``follow_redirects``：是否跟随重定向，默认值为 ``False``。
 
-        ``httpx_args``: A dictionary of additional arguments to be passed to the ``httpx.Client`` and ``httpx.AsyncClient`` constructor.
+        ``httpx_args``：传给 ``httpx.Client`` 和 ``httpx.AsyncClient`` 构造函数的额外参数字典。
 
 
-    Attributes:
-        raise_on_unexpected_status: Whether or not to raise an errors.UnexpectedStatus if the API returns a
-            status code that was not documented in the source OpenAPI document. Can also be provided as a keyword
-            argument to the constructor.
+    属性：
+        raise_on_unexpected_status：当 API 返回的状态码未记录在源 OpenAPI 文档中时，
+            是否抛出 ``errors.UnexpectedStatus``。也可作为关键字参数传给构造函数。
     """
 
     raise_on_unexpected_status: bool = field(default=False, kw_only=True)
@@ -138,34 +137,33 @@ class Client:
 
 @define
 class AuthenticatedClient:
-    """A Client which has been authenticated for use on secured endpoints
+    """用于访问受保护端点的已认证客户端。
 
-    The following are accepted as keyword arguments and will be used to construct httpx Clients internally:
+    以下参数可作为关键字参数传入，并用于在内部构造 httpx 客户端：
 
-        ``base_url``: The base URL for the API, all requests are made to a relative path to this URL
+        ``base_url``：API 的基础 URL，所有请求均使用相对于此 URL 的路径。
 
-        ``cookies``: A dictionary of cookies to be sent with every request
+        ``cookies``：每次请求时发送的 cookie 字典。
 
-        ``headers``: A dictionary of headers to be sent with every request
+        ``headers``：每次请求时发送的请求头字典。
 
-        ``timeout``: The maximum amount of a time a request can take. API functions will raise
-        httpx.TimeoutException if this is exceeded.
+        ``timeout``：请求允许花费的最长时间，超过后 API 函数会抛出
+        ``httpx.TimeoutException``。
 
-        ``verify_ssl``: Whether or not to verify the SSL certificate of the API server. This should be True in production,
-        but can be set to False for testing purposes.
+        ``verify_ssl``：是否验证 API 服务器的 SSL 证书。生产环境中应设为 ``True``，
+        测试时可设为 ``False``。
 
-        ``follow_redirects``: Whether or not to follow redirects. Default value is False.
+        ``follow_redirects``：是否跟随重定向，默认值为 ``False``。
 
-        ``httpx_args``: A dictionary of additional arguments to be passed to the ``httpx.Client`` and ``httpx.AsyncClient`` constructor.
+        ``httpx_args``：传给 ``httpx.Client`` 和 ``httpx.AsyncClient`` 构造函数的额外参数字典。
 
 
-    Attributes:
-        raise_on_unexpected_status: Whether or not to raise an errors.UnexpectedStatus if the API returns a
-            status code that was not documented in the source OpenAPI document. Can also be provided as a keyword
-            argument to the constructor.
-        token: The token to use for authentication
-        prefix: The prefix to use for the Authorization header
-        auth_header_name: The name of the Authorization header
+    属性：
+        raise_on_unexpected_status：当 API 返回的状态码未记录在源 OpenAPI 文档中时，
+            是否抛出 ``errors.UnexpectedStatus``。也可作为关键字参数传给构造函数。
+        token：用于认证的令牌。
+        prefix：认证请求头中令牌的前缀。
+        auth_header_name：认证请求头的名称。
     """
 
     raise_on_unexpected_status: bool = field(default=False, kw_only=True)

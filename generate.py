@@ -47,15 +47,25 @@ def load_openapi_ori() -> None:
     cookies = {k: v for k, v in cookies.items() if v}
 
     response = requests.get(url, headers=headers, cookies=cookies)
+    openapi = response.json()
+    search = openapi["paths"]["/search"]["get"]
+    search["summary"] = "分页搜索数据集"
+    search["description"] = "结果按发布时间降序排列"
     with open(OPENAPI_FILEPATH_ORI, "w", encoding="utf-8") as f:
-        f.write(json.dumps(response.json(), indent=4, ensure_ascii=False))
+        f.write(json.dumps(openapi, indent=4, ensure_ascii=False))
 
 
-load_openapi_ori()
-convert_openapi_v3()
-generate_api(
-    path=Path(OPENAPI_FILEPATH_V3),
-    output_path=Path("./src/funapi_sciencedb"),
-    meta=MetaType.NONE,
-    overwrite=True,
-)
+def main() -> None:
+    """拉取并转换 OpenAPI 文档，然后重新生成客户端代码。"""
+    load_openapi_ori()
+    convert_openapi_v3()
+    generate_api(
+        path=Path(OPENAPI_FILEPATH_V3),
+        output_path=Path("./src/funapi_sciencedb"),
+        meta=MetaType.NONE,
+        overwrite=True,
+    )
+
+
+if __name__ == "__main__":
+    main()

@@ -65,20 +65,20 @@ def sync_detailed(
     range_: Unset | int = UNSET,
     size: Unset | int = 10,
 ) -> Response[APIResultSearchResult]:
-    """search dataset by page
+    """分页搜索数据集。
 
-     result is order by publish time desc
+    结果按发布时间降序排列。
 
-    Args:
-        page (Unset | int):  Default: 1.
+    参数：
+        page (Unset | int)：默认值为 1。
         range_ (Unset | int):
-        size (Unset | int):  Default: 10.
+        size (Unset | int)：默认值为 10。
 
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
+    抛出：
+        errors.UnexpectedStatus：服务器返回未记录的状态码且 ``Client.raise_on_unexpected_status`` 为 ``True``。
+        httpx.TimeoutException：请求耗时超过 ``Client.timeout``。
 
-    Returns:
+    返回：
         Response[APIResultSearchResult]
     """
 
@@ -102,20 +102,20 @@ def sync(
     range_: Unset | int = UNSET,
     size: Unset | int = 10,
 ) -> APIResultSearchResult | None:
-    """search dataset by page
+    """分页搜索数据集。
 
-     result is order by publish time desc
+    结果按发布时间降序排列。
 
-    Args:
-        page (Unset | int):  Default: 1.
+    参数：
+        page (Unset | int)：默认值为 1。
         range_ (Unset | int):
-        size (Unset | int):  Default: 10.
+        size (Unset | int)：默认值为 10。
 
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
+    抛出：
+        errors.UnexpectedStatus：服务器返回未记录的状态码且 ``Client.raise_on_unexpected_status`` 为 ``True``。
+        httpx.TimeoutException：请求耗时超过 ``Client.timeout``。
 
-    Returns:
+    返回：
         APIResultSearchResult
     """
 
@@ -134,20 +134,20 @@ async def asyncio_detailed(
     range_: Unset | int = UNSET,
     size: Unset | int = 10,
 ) -> Response[APIResultSearchResult]:
-    """search dataset by page
+    """异步分页搜索数据集并返回完整响应。
 
-     result is order by publish time desc
+    结果按发布时间降序排列。
 
-    Args:
-        page (Unset | int):  Default: 1.
+    参数：
+        page (Unset | int)：默认值为 1。
         range_ (Unset | int):
-        size (Unset | int):  Default: 10.
+        size (Unset | int)：默认值为 10。
 
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
+    抛出：
+        errors.UnexpectedStatus：服务器返回未记录的状态码且 ``Client.raise_on_unexpected_status`` 为 ``True``。
+        httpx.TimeoutException：请求耗时超过 ``Client.timeout``。
 
-    Returns:
+    返回：
         Response[APIResultSearchResult]
     """
 
@@ -169,20 +169,20 @@ async def asyncio(
     range_: Unset | int = UNSET,
     size: Unset | int = 10,
 ) -> APIResultSearchResult | None:
-    """search dataset by page
+    """异步分页搜索数据集。
 
-     result is order by publish time desc
+    结果按发布时间降序排列。
 
-    Args:
-        page (Unset | int):  Default: 1.
+    参数：
+        page (Unset | int)：默认值为 1。
         range_ (Unset | int):
-        size (Unset | int):  Default: 10.
+        size (Unset | int)：默认值为 10。
 
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
+    抛出：
+        errors.UnexpectedStatus：服务器返回未记录的状态码且 ``Client.raise_on_unexpected_status`` 为 ``True``。
+        httpx.TimeoutException：请求耗时超过 ``Client.timeout``。
 
-    Returns:
+    返回：
         APIResultSearchResult
     """
 
