@@ -13,6 +13,7 @@ from localize import localize_generated, localize_openapi
 OPENAPI_FILEPATH_ORI = "openapi-ori.json"
 OPENAPI_FILEPATH_V3 = "openapi-v3.json"
 OUTPUT_DIR = Path("./src/funapi_sciencedb")
+OPENAPI_REQUEST_TIMEOUT = 30
 
 
 def load_openapi_ori() -> None:
@@ -49,10 +50,32 @@ def load_openapi_ori() -> None:
     }
     cookies = {k: v for k, v in cookies.items() if v}
 
-    response = requests.get(url, headers=headers, cookies=cookies)
+    try:
+        response = requests.get(
+            url,
+            headers=headers,
+            cookies=cookies,
+            timeout=OPENAPI_REQUEST_TIMEOUT,
+        )
+        response.raise_for_status()
+    except requests.HTTPError as exc:
+        status = exc.response.status_code if exc.response is not None else "未知"
+        raise RuntimeError(
+            f"下载 ScienceDB OpenAPI 文档失败：{url}（HTTP {status}，{exc}）"
+        ) from exc
+    except requests.RequestException as exc:
+        raise RuntimeError(f"下载 ScienceDB OpenAPI 文档失败：{url}（{exc}）") from exc
+
+    try:
+        openapi = response.json()
+    except ValueError as exc:
+        raise RuntimeError(
+            "ScienceDB OpenAPI 文档不是合法 JSON："
+            f"{url}（HTTP {response.status_code}）"
+        ) from exc
     # 上游文档是英文的，先按 localize.py 的映射表换成中文再落盘，这样后面生成出来的
     # docstring 直接就是中文（SPEC §7），不用事后再补。
-    openapi = localize_openapi(response.json())
+    openapi = localize_openapi(openapi)
     with open(OPENAPI_FILEPATH_ORI, "w", encoding="utf-8") as f:
         f.write(json.dumps(openapi, indent=4, ensure_ascii=False) + "\n")
 

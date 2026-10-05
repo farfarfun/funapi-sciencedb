@@ -59,6 +59,48 @@ def test_import_generate_has_no_side_effects(monkeypatch):
     assert calls == []
 
 
+def test_generate_openapi_uses_timeout_and_checks_response(monkeypatch, tmp_path):
+    """生成脚本下载文档时应设置超时并在写文件前检查 HTTP 状态。"""
+    calls = {}
+
+    class RequestException(Exception):
+        pass
+
+    response = MagicMock()
+    response.json.return_value = {"info": {"title": "ScienceDB API"}}
+    response.status_code = 200
+    requests = ModuleType("requests")
+    requests.RequestException = RequestException
+
+    def get(*args, **kwargs):
+        calls["args"] = args
+        calls["kwargs"] = kwargs
+        return response
+
+    requests.get = get
+    convert = ModuleType("funapi.convert")
+    convert.convert_openapi_v3 = lambda: None
+    generate = ModuleType("funapi.generate")
+    generate.generate_api = lambda **kwargs: None
+    client = ModuleType("openapi_python_client")
+    client.MetaType = SimpleNamespace(NONE=None)
+
+    monkeypatch.setitem(sys.modules, "requests", requests)
+    monkeypatch.setitem(sys.modules, "funapi", ModuleType("funapi"))
+    monkeypatch.setitem(sys.modules, "funapi.convert", convert)
+    monkeypatch.setitem(sys.modules, "funapi.generate", generate)
+    monkeypatch.setitem(sys.modules, "openapi_python_client", client)
+    monkeypatch.chdir(tmp_path)
+
+    namespace = runpy.run_path(str(ROOT / "generate.py"), run_name="generate")
+    namespace["load_openapi_ori"]()
+
+    assert calls["args"] == ("https://www.scidb.cn/open-api/v2/api-docs",)
+    assert calls["kwargs"]["timeout"] == 30
+    response.raise_for_status.assert_called_once_with()
+    assert (tmp_path / "openapi-ori.json").exists()
+
+
 def test_import_top_level_package():
     """导入顶层包及其主要符号应当成功。"""
     import funapi_sciencedb

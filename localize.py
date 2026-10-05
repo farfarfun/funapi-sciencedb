@@ -229,6 +229,33 @@ TEMPLATE_TEXTS: dict[str, str] = {
 
 _CJK = re.compile(r"[一-鿿]")
 
+_MODEL_METHOD_DOCSTRINGS = {
+    "to_dict": """将模型实例序列化为字典。
+
+参数：
+    无。
+
+返回：
+    dict[str, Any]: 包含已设置字段和额外属性的字典。
+""",
+    "from_dict": """从字典反序列化为模型实例。
+
+参数：
+    src_dict (dict[str, Any]): 待解析的字典。
+
+返回：
+    T: 解析得到的模型实例。
+""",
+    "additional_keys": """获取额外属性的键列表。
+
+参数：
+    无。
+
+返回：
+    list[str]: 额外属性的键列表。
+""",
+}
+
 
 def _code_replacements() -> list[tuple[re.Pattern[str], str]]:
     """构造 docstring 替换规则，长文案优先，避免短文案先把长文案切断。
@@ -296,6 +323,32 @@ def localize_source(source: str) -> str:
     return "".join(lines)
 
 
+def add_model_method_docstrings(source: str) -> str:
+    """为生成模型中缺失说明的公开序列化方法补充中文 docstring。"""
+    tree = ast.parse(source)
+    insertions: list[tuple[int, str]] = []
+    for class_node in (node for node in tree.body if isinstance(node, ast.ClassDef)):
+        for node in class_node.body:
+            if not isinstance(node, ast.FunctionDef) or node.name not in _MODEL_METHOD_DOCSTRINGS:
+                continue
+            if ast.get_docstring(node) is not None:
+                continue
+            indent = " " * (node.col_offset + 4)
+            docstring = _MODEL_METHOD_DOCSTRINGS[node.name]
+            lines = [f'{indent}"""{docstring.splitlines()[0]}']
+            lines.extend(
+                f"{indent}{line}" if line else ""
+                for line in docstring.splitlines()[1:]
+            )
+            lines.append(f'{indent}"""')
+            insertions.append((node.body[0].lineno - 1, "\n".join(lines) + "\n\n"))
+
+    lines = source.splitlines(keepends=True)
+    for index, docstring in reversed(insertions):
+        lines.insert(index, docstring)
+    return "".join(lines)
+
+
 def untranslated_docstrings(root: Path = GENERATED_DIR) -> list[str]:
     """列出仍然不含中文的 docstring，形如 `路径:行号`。"""
     missing = []
@@ -314,6 +367,8 @@ def localize_generated(root: Path = GENERATED_DIR) -> list[Path]:
     for path in sorted(root.rglob("*.py")):
         source = path.read_text(encoding="utf-8")
         new_source = localize_source(source)
+        if path.parent.name == "models":
+            new_source = add_model_method_docstrings(new_source)
         if new_source != source:
             path.write_text(new_source, encoding="utf-8")
             changed.append(path)

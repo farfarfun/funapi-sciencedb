@@ -32,6 +32,15 @@ class SearchResult:
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
+        """将模型实例序列化为字典。
+
+        参数：
+            无。
+
+        返回：
+            dict[str, Any]: 包含已设置字段和额外属性的字典。
+        """
+
         page_no = self.page_no
 
         page_size = self.page_size
@@ -65,6 +74,15 @@ class SearchResult:
 
     @classmethod
     def from_dict(cls, src_dict: dict[str, Any]) -> T:
+        """从字典反序列化为模型实例。
+
+        参数：
+            src_dict (dict[str, Any]): 待解析的字典。
+
+        返回：
+            T: 解析得到的模型实例。
+        """
+
         from ..models.search_record import SearchRecord
 
         d = src_dict.copy()
@@ -96,6 +114,15 @@ class SearchResult:
 
     @property
     def additional_keys(self) -> list[str]:
+        """获取额外属性的键列表。
+
+        参数：
+            无。
+
+        返回：
+            list[str]: 额外属性的键列表。
+        """
+
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:
