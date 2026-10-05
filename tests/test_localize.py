@@ -5,6 +5,7 @@
 2. 中文化是幂等的、只动 docstring 不动代码，所以重新生成客户端之后再跑一遍也安全。
 """
 
+import ast
 import json
 from pathlib import Path
 
@@ -16,6 +17,7 @@ from localize import (
     OPENAPI_FILES,
     OPENAPI_TEXTS,
     TEMPLATE_TEXTS,
+    add_model_method_docstrings,
     localize_openapi,
     localize_source,
     untranslated_docstrings,
@@ -27,6 +29,23 @@ ROOT = Path(__file__).resolve().parent.parent
 def test_generated_package_has_no_english_docstring():
     """已提交的生成代码里不应该再有不含中文的 docstring。"""
     assert untranslated_docstrings(ROOT / GENERATED_DIR) == []
+
+
+def test_generated_model_public_methods_have_chinese_docstrings():
+    """模型的公开序列化方法应有说明用途、参数和返回值的中文 docstring。"""
+    for path in (ROOT / GENERATED_DIR / "models").glob("*.py"):
+        tree = ast.parse(path.read_text(encoding="utf-8"))
+        for class_node in (node for node in tree.body if isinstance(node, ast.ClassDef)):
+            for node in class_node.body:
+                if not isinstance(node, ast.FunctionDef) or node.name not in {
+                    "to_dict",
+                    "from_dict",
+                    "additional_keys",
+                }:
+                    continue
+                docstring = ast.get_docstring(node)
+                assert docstring is not None, f"{path}:{node.lineno}"
+                assert all(part in docstring for part in ("参数：", "返回："))
 
 
 @pytest.mark.parametrize("name", OPENAPI_FILES)
@@ -135,6 +154,27 @@ def test_localize_source_is_idempotent():
     once = localize_source(source)
 
     assert localize_source(once) == once
+
+
+def test_add_model_method_docstrings_is_idempotent():
+    source = '''class Model:
+    def to_dict(self) -> dict[str, object]:
+        return {}
+
+    @classmethod
+    def from_dict(cls, src_dict: dict[str, object]) -> "Model":
+        return cls()
+
+    @property
+    def additional_keys(self) -> list[str]:
+        return []
+'''
+
+    once = add_model_method_docstrings(source)
+
+    assert add_model_method_docstrings(once) == once
+    assert once.count("参数：") == 3
+    assert once.count("返回：") == 3
 
 
 def test_localize_source_leaves_untranslated_text_alone():
