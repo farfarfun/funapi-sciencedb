@@ -28,12 +28,14 @@ from __future__ import annotations
 
 import ast
 import json
+import logging
 import re
 import sys
 from pathlib import Path
 
 OPENAPI_FILES = ("openapi-ori.json", "openapi-v3.json")
 GENERATED_DIR = Path("src/funapi_sciencedb")
+LOGGER = logging.getLogger(__name__)
 
 #: OpenAPI 文档里需要中文化的 `summary` / `description` 原文 -> 中文。
 #: `info`、`tags` 里的产品名（`ScienceDB API` 之类）是专有名词，故意不翻译。
@@ -392,20 +394,21 @@ def localize_openapi_files(files: tuple[str, ...] = OPENAPI_FILES) -> list[Path]
 
 
 def main(argv: list[str] | None = None) -> int:
+    logging.basicConfig(level=logging.INFO, format="%(message)s")
     argv = sys.argv[1:] if argv is None else argv
     if argv and argv[0] == "--check":
         missing = untranslated_docstrings()
         for item in missing:
-            print(f"still english: {item}")
+            LOGGER.error("still english: %s", item)
         return 1 if missing else 0
 
     for path in localize_openapi_files():
-        print(f"localized: {path}")
+        LOGGER.info("localized: %s", path)
     for path in localize_generated():
-        print(f"localized: {path}")
+        LOGGER.info("localized: %s", path)
     missing = untranslated_docstrings()
     for item in missing:
-        print(f"still english: {item}")
+        LOGGER.error("still english: %s", item)
     return 1 if missing else 0
 
 

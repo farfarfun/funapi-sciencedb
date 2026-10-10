@@ -20,6 +20,7 @@ from localize import (
     add_model_method_docstrings,
     localize_openapi,
     localize_source,
+    main,
     untranslated_docstrings,
 )
 
@@ -202,6 +203,13 @@ def test_untranslated_docstrings_reports_english_docstring(tmp_path):
 
     assert len(missing) == 1
     assert "mod.py" in missing[0]
+
+
+def test_main_logs_untranslated_docstrings(monkeypatch, caplog):
+    monkeypatch.setattr("localize.untranslated_docstrings", lambda: ["src/mod.py:1"])
+
+    assert main(["--check"]) == 1
+    assert "still english: src/mod.py:1" in caplog.text
 
 
 def test_translation_tables_are_sane():
