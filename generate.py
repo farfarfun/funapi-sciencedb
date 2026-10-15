@@ -70,8 +70,7 @@ def load_openapi_ori() -> None:
         openapi = response.json()
     except ValueError as exc:
         raise RuntimeError(
-            "ScienceDB OpenAPI 文档不是合法 JSON："
-            f"{url}（HTTP {response.status_code}）"
+            f"ScienceDB OpenAPI 文档不是合法 JSON：{url}（HTTP {response.status_code}）"
         ) from exc
     # 上游文档是英文的，先按 localize.py 的映射表换成中文再落盘，这样后面生成出来的
     # docstring 直接就是中文（SPEC §7），不用事后再补。

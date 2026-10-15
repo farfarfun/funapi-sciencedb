@@ -331,7 +331,10 @@ def add_model_method_docstrings(source: str) -> str:
     insertions: list[tuple[int, str]] = []
     for class_node in (node for node in tree.body if isinstance(node, ast.ClassDef)):
         for node in class_node.body:
-            if not isinstance(node, ast.FunctionDef) or node.name not in _MODEL_METHOD_DOCSTRINGS:
+            if (
+                not isinstance(node, ast.FunctionDef)
+                or node.name not in _MODEL_METHOD_DOCSTRINGS
+            ):
                 continue
             if ast.get_docstring(node) is not None:
                 continue
@@ -339,8 +342,7 @@ def add_model_method_docstrings(source: str) -> str:
             docstring = _MODEL_METHOD_DOCSTRINGS[node.name]
             lines = [f'{indent}"""{docstring.splitlines()[0]}']
             lines.extend(
-                f"{indent}{line}" if line else ""
-                for line in docstring.splitlines()[1:]
+                f"{indent}{line}" if line else "" for line in docstring.splitlines()[1:]
             )
             lines.append(f'{indent}"""')
             insertions.append((node.body[0].lineno - 1, "\n".join(lines) + "\n\n"))

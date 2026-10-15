@@ -36,7 +36,9 @@ def test_generated_model_public_methods_have_chinese_docstrings():
     """模型的公开序列化方法应有说明用途、参数和返回值的中文 docstring。"""
     for path in (ROOT / GENERATED_DIR / "models").glob("*.py"):
         tree = ast.parse(path.read_text(encoding="utf-8"))
-        for class_node in (node for node in tree.body if isinstance(node, ast.ClassDef)):
+        for class_node in (
+            node for node in tree.body if isinstance(node, ast.ClassDef)
+        ):
             for node in class_node.body:
                 if not isinstance(node, ast.FunctionDef) or node.name not in {
                     "to_dict",
@@ -158,7 +160,7 @@ def test_localize_source_is_idempotent():
 
 
 def test_add_model_method_docstrings_is_idempotent():
-    source = '''class Model:
+    source = """class Model:
     def to_dict(self) -> dict[str, object]:
         return {}
 
@@ -169,7 +171,7 @@ def test_add_model_method_docstrings_is_idempotent():
     @property
     def additional_keys(self) -> list[str]:
         return []
-'''
+"""
 
     once = add_model_method_docstrings(source)
 
@@ -218,7 +220,9 @@ def test_main_logs_untranslated_docstrings(monkeypatch):
         def error(self, message: str) -> None:
             messages.append(message)
 
-    monkeypatch.setattr("localize.getLogger", lambda *args, **kwargs: _RecordingLogger())
+    monkeypatch.setattr(
+        "localize.getLogger", lambda *args, **kwargs: _RecordingLogger()
+    )
 
     assert main(["--check"]) == 1
     assert "still english: src/mod.py:1" in messages
