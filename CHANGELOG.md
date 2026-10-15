@@ -24,6 +24,11 @@
 
 ### 变更
 
+- `pyproject.toml` 补上 `authors` 与 `license-files = ["LICENSE"]`，构建产物的
+  METADATA 里才会带作者和许可证文件（SPEC §4.2）。
+- `localize.py` 的状态/诊断输出改用 `farlog`（SPEC §8.1：不要裸 `print`，也不要裸用
+  标准库 `logging`）。logger 在 `main()` 里创建，这样单纯 import 本模块不会建
+  `logs/` 目录。`farlog` 只进 `dev` / `generate` 依赖组，不进发布包。
 - `openapi-ori.json` / `openapi-v3.json` 里的接口与模型说明同步改为中文，并补上文件
   末尾换行。
 - README 的「重新生成客户端」补充中文化步骤与 `localize.py --check` 用法。
