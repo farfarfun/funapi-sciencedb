@@ -35,6 +35,9 @@
 - `uv.lock` 中的传递依赖 urllib3 由 2.7.0 升到 2.8.0，修掉 GitHub dependabot 报出的
   3 个漏洞（2 个 HIGH：`HTTPResponse.stream()/read_chunked()` 无界缓冲、HTTPS 代理的
   TLS 配置可能被忽略；1 个 MEDIUM：chunked deflate 可进入无限循环）。本包代码未改动。
+- `generate.py`、`localize.py`、`tests/test_localize.py` 按仓库当前 ruff 配置补跑
+  `ruff format`，清掉一直存在的格式漂移，SPEC §14.2 发布前清单的
+  `ruff format` 一项现在能通过。纯格式化，无行为变更。
 
 ### 废弃
 
