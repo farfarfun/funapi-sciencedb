@@ -19,10 +19,11 @@ build-backend = "hatchling.build"
 packages = ["src/funapi_sciencedb", "src/sciencedb"]
 
 [dependency-groups]
-dev = [ "pytest>=9.0.3",]
+# localize.py 按 SPEC §8.1 用 farlog 打日志，测试要 import 它，所以 dev 组也得装。
+dev = [ "pytest>=9.0.3", "farlog>=1.1.8",]
 # generate.py 用来重新拉取 ScienceDB OpenAPI 文档并重新生成客户端代码，
 # 这几个依赖只有跑生成脚本时才需要，不进最终发布包。
-generate = [ "requests>=2.31.0", "funapi>=1.0.2", "openapi-python-client>=0.21.0",]
+generate = [ "requests>=2.31.0", "funapi>=1.0.2", "openapi-python-client>=0.21.0", "farlog>=1.1.8",]
 
 [tool.ruff]
 target-version = "py310"

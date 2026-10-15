@@ -205,11 +205,23 @@ def test_untranslated_docstrings_reports_english_docstring(tmp_path):
     assert "mod.py" in missing[0]
 
 
-def test_main_logs_untranslated_docstrings(monkeypatch, caplog):
+def test_main_logs_untranslated_docstrings(monkeypatch):
+    """`--check` 发现未中文化的 docstring 时，要写一条 error 日志并以非 0 退出。"""
     monkeypatch.setattr("localize.untranslated_docstrings", lambda: ["src/mod.py:1"])
+    # 替换掉 farlog 的 logger：既能断言日志内容，也避免测试在仓库里建 logs/ 目录。
+    messages: list[str] = []
+
+    class _RecordingLogger:
+        def info(self, message: str) -> None:
+            messages.append(message)
+
+        def error(self, message: str) -> None:
+            messages.append(message)
+
+    monkeypatch.setattr("localize.getLogger", lambda *args, **kwargs: _RecordingLogger())
 
     assert main(["--check"]) == 1
-    assert "still english: src/mod.py:1" in caplog.text
+    assert "still english: src/mod.py:1" in messages
 
 
 def test_translation_tables_are_sane():

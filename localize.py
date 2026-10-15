@@ -28,14 +28,14 @@ from __future__ import annotations
 
 import ast
 import json
-import logging
 import re
 import sys
 from pathlib import Path
 
+from farlog import getLogger
+
 OPENAPI_FILES = ("openapi-ori.json", "openapi-v3.json")
 GENERATED_DIR = Path("src/funapi_sciencedb")
-LOGGER = logging.getLogger(__name__)
 
 #: OpenAPI 文档里需要中文化的 `summary` / `description` 原文 -> 中文。
 #: `info`、`tags` 里的产品名（`ScienceDB API` 之类）是专有名词，故意不翻译。
@@ -394,21 +394,23 @@ def localize_openapi_files(files: tuple[str, ...] = OPENAPI_FILES) -> list[Path]
 
 
 def main(argv: list[str] | None = None) -> int:
-    logging.basicConfig(level=logging.INFO, format="%(message)s")
+    # logger 在入口里创建而不是模块级：`farlog.getLogger` 会建 logs/ 目录并挂文件
+    # handler，模块级创建会让单纯 import 本模块（测试、`generate.py`）就产生副作用。
+    logger = getLogger("funapi-sciencedb")
     argv = sys.argv[1:] if argv is None else argv
     if argv and argv[0] == "--check":
         missing = untranslated_docstrings()
         for item in missing:
-            LOGGER.error("still english: %s", item)
+            logger.error(f"still english: {item}")
         return 1 if missing else 0
 
     for path in localize_openapi_files():
-        LOGGER.info("localized: %s", path)
+        logger.info(f"localized: {path}")
     for path in localize_generated():
-        LOGGER.info("localized: %s", path)
+        logger.info(f"localized: {path}")
     missing = untranslated_docstrings()
     for item in missing:
-        LOGGER.error("still english: %s", item)
+        logger.error(f"still english: {item}")
     return 1 if missing else 0
 
 
